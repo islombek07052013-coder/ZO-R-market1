@@ -79,52 +79,54 @@
     <!-- Main Content Container -->
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
 
-        <!-- Uzum Style Hero Banner Slider -->
-        <div class="relative rounded-3xl overflow-hidden shadow-md uzum-purple text-white p-6 md:p-10 flex flex-col md:flex-row items-center justify-between">
-            <div class="max-w-lg space-y-4 z-10">
-                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Super Sovrinli O'yin</span>
-                <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-none">2 ta mashina va boshqa yirik sovrinlar!</h1>
-                <p class="text-sm text-purple-200">ZO'R marketda xarid qiling va imkoniyatga ega bo'ling.</p>
-                <button class="bg-white uzum-purple-text font-bold px-6 py-3 rounded-xl text-sm shadow-lg hover:bg-gray-100 transition">Ishtirok etish</button>
+        <!-- Food Delivery Grocery Banner -->
+        <div class="relative rounded-3xl overflow-hidden shadow-md bg-gradient-to-r from-purple-700 via-[#7000FF] to-indigo-800 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between">
+            <div class="max-w-lg space-y-3 z-10">
+                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">⚡ Uzum Tezkor Yetkazish</span>
+                <h1 class="text-2xl md:text-4xl font-black tracking-tight leading-tight">Yangi va sifatli oziq-ovqat mahsulotlari!</h1>
+                <p class="text-xs md:text-sm text-purple-200">Uyingizgacha 30 daqiqada tezkor va bepul yetkazib beramiz.</p>
             </div>
-            <div class="mt-6 md:mt-0 z-10">
-                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600" alt="Promo Car" class="w-80 md:w-96 rounded-2xl shadow-2xl object-cover">
+            <div class="mt-4 md:mt-0 z-10">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500" alt="Fresh Groceries" class="w-72 md:w-80 rounded-2xl shadow-xl object-cover h-44">
             </div>
-            <!-- Absolute background glow -->
-            <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"></div>
+            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-purple-400/20 rounded-full blur-2xl"></div>
         </div>
 
         <!-- Categories Row -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
             <button onclick="filterCategory('all')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-purple-50 uzum-purple-text rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-border-all"></i></div>
+                <div class="w-10 h-10 bg-purple-50 uzum-purple-text rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-border-all"></i></div>
                 <span class="text-xs font-bold">Barchasi</span>
             </button>
             <button onclick="filterCategory('fruits')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-apple-whole"></i></div>
-                <span class="text-xs font-bold">Mevalar</span>
+                <div class="w-10 h-10 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-apple-whole"></i></div>
+                <span class="text-xs font-bold">Meva va sabzavot</span>
             </button>
             <button onclick="filterCategory('dairy')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-cow"></i></div>
-                <span class="text-xs font-bold">Sut mahsuloti</span>
+                <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-cow"></i></div>
+                <span class="text-xs font-bold">Sut va tuxum</span>
             </button>
             <button onclick="filterCategory('bakery')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-bread-slice"></i></div>
-                <span class="text-xs font-bold">Non va bulochka</span>
+                <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-bread-slice"></i></div>
+                <span class="text-xs font-bold">Non va pishiriq</span>
             </button>
             <button onclick="filterCategory('sweets')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-cookie-bite"></i></div>
+                <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-cookie-bite"></i></div>
                 <span class="text-xs font-bold">Shirinliklar</span>
             </button>
+            <button onclick="filterCategory('meat')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-drumstick-bite"></i></div>
+                <span class="text-xs font-bold">Go'sht va baliq</span>
+            </button>
             <button onclick="filterCategory('beverages')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
-                <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-bottle-droplet"></i></div>
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-bottle-droplet"></i></div>
                 <span class="text-xs font-bold">Ichimliklar</span>
             </button>
         </div>
 
         <!-- Section Header -->
-        <div class="flex justify-between items-center pt-4">
-            <h2 class="text-2xl font-black text-gray-900 tracking-tight">Mashhur mahsulotlar</h2>
+        <div class="flex justify-between items-center pt-2">
+            <h2 class="text-xl md:text-2xl font-black text-gray-900 tracking-tight">Ommabop mahsulotlar</h2>
             <span class="uzum-purple-text font-bold text-sm cursor-pointer hover:underline">Barchasini ko'rish →</span>
         </div>
 
@@ -169,13 +171,30 @@
 
     <!-- JavaScript Logic -->
     <script>
-        let products = JSON.parse(localStorage.getItem('zor_products')) || [
-            { id: 1, name: "Banan Ekvador, 1kg", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", weight: "1 kg", desc: "Saralangan va shirin bananlar." },
-            { id: 2, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", weight: "1 Litr", desc: "Qishloq sutidan tayyorlangan pasterizatsiyalangan sut." },
-            { id: 3, name: "Fransuz Kruassani", price: 9000, category: "bakery", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", weight: "80g", desc: "Har kuni tongda pishiriladigan sariyog'li kruassan." },
-            { id: 4, name: "Qora Shokolad Nestlé", price: 24000, category: "sweets", image: "https://images.unsplash.com/photo-1548592355-d4e5f03767cb?w=400", weight: "100g", desc: "70% kakao tarkibli achchiq shokolad." },
-            { id: 5, name: "Apelsin Soki 1L", price: 21000, category: "beverages", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400", weight: "1 Litr", desc: "100% tabiiy meva sharbati." }
+        // Ko'paytirilgan sifatli mahsulotlar bazasi
+        const initialProducts = [
+            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", weight: "1 kg", desc: "Saralangan, shirin va yangi Ekvador bananlari." },
+            { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", weight: "1 kg", desc: "Sersuv va qarsillaydigan tabiiy shirin qizil olma." },
+            { id: 3, name: "Yangi Pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", weight: "1 kg", desc: "Issiqxonada tabiiy yetishtirilgan sersuv pomidor." },
+            { id: 4, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", weight: "1 kg", desc: "Yangi va shirin, qarsillaydigan bodring." },
+            { id: 5, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
+            { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." },
+            { id: 7, name: "Yunon yogurti 200g", price: 15000, category: "dairy", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400", weight: "200 g", desc: "Quyuq va mazali tabiiy Yunon yogurti." },
+            { id: 8, name: "Sariyog' Nestlé 82.5%", price: 34000, category: "dairy", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400", weight: "200 g", desc: "Yuqori sifatli va xushbo'y sariyog'." },
+            { id: 9, name: "Toshkent tandir noni", price: 4500, category: "bakery", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", weight: "1 dona", desc: "Issiq va qirsim tandir noni." },
+            { id: 10, name: "Fransuz kruassani", price: 9000, category: "bakery", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", weight: "80 g", desc: "Sariyog'li va yumshoq fransuz kruassani." },
+            { id: 11, name: "Qora Shokolad Nestlé", price: 24000, category: "sweets", image: "https://images.unsplash.com/photo-1548592355-d4e5f03767cb?w=400", weight: "100 g", desc: "70% kakao tarkibli sifatli achchiq shokolad." },
+            { id: 12, name: "Bodomli Shokolad", price: 28000, category: "sweets", image: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400", weight: "100 g", desc: "Qovurilgan bodom va sutli shokolad." },
+            { id: 13, name: "Mol go'shti (Lohas)", price: 95000, category: "meat", image: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400", weight: "1 kg", desc: "Yangi va yumshoq saralangan mol go'shti." },
+            { id: 14, name: "Tovuq lahm go'shti", price: 48000, category: "meat", image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400", weight: "1 kg", desc: "Semiz va parhezli tovuq ko'krak go'shti." },
+            { id: 15, name: "Apelsin Sharvati 1L", price: 21000, category: "beverages", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400", weight: "1 Litr", desc: "100% tabiiy va vitaminli apelsin sharbati." },
+            { id: 16, name: "Coca-Cola Classic 1.5L", price: 13500, category: "beverages", image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400", weight: "1.5 Litr", desc: "Maza beruvchi salqin gazlangan ichimlik." }
         ];
+
+        // Har doim eng yangi mahsulotlar bazasi ko'rinishini ta'minlash
+        let storedProducts = JSON.parse(localStorage.getItem('zor_products'));
+        let products = (storedProducts && storedProducts.length >= initialProducts.length) ? storedProducts : initialProducts;
+        localStorage.setItem('zor_products', JSON.stringify(products));
 
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
@@ -208,6 +227,7 @@
                                 <span class="absolute top-2 left-2 bg-[#7000FF] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Arzon narx</span>
                             </div>
                             <h3 class="font-medium text-xs text-gray-800 mb-1 line-clamp-2 h-8">${p.name}</h3>
+                            <span class="text-[10px] text-gray-400 font-medium block mb-1">${p.weight || '1 dona'}</span>
                         </div>
                         <div>
                             <div class="font-black text-gray-900 text-sm mb-2.5">${p.price.toLocaleString()} so'm</div>
@@ -335,7 +355,7 @@
             modalContent.innerHTML = `
                 <img src="${p.image}" class="w-full h-48 object-cover rounded-2xl mb-4 bg-gray-50">
                 <h3 class="font-black text-lg text-gray-900 mb-1">${p.name}</h3>
-                <div class="uzum-purple-text font-black text-base mb-3">${p.price.toLocaleString()} so'm</div>
+                <div class="uzum-purple-text font-black text-base mb-3">${p.price.toLocaleString()} so'm / ${p.weight || 'dona'}</div>
                 <p class="text-xs text-gray-500 mb-6 leading-relaxed">${p.desc}</p>
                 <button onclick="addToCart(${p.id}); closeProductModal();" class="w-full uzum-purple uzum-purple-hover text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-500/20">Savatga qo'shish</button>
             `;
