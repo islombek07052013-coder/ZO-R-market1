@@ -3,119 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZO'R market - Fresh Groceries</title>
+    <title>ZO'R market - Premium Groceries</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom Dribbble Stylesheet -->
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-slate-100 text-slate-800 flex justify-center items-center min-h-screen">
+<body class="bg-slate-900 text-slate-100 flex justify-center items-center min-h-screen">
 
-    <div class="mobile-app-wrapper w-full flex flex-col bg-white shadow-xl relative overflow-hidden md:my-6">
+    <div class="mobile-app-wrapper w-full flex flex-col bg-slate-950 shadow-2xl relative overflow-hidden md:my-6 border border-slate-800">
         
         <!-- Header -->
-        <header class="glass-header sticky top-0 z-40 px-4 py-3.5 flex items-center justify-between">
+        <header class="glass-header sticky top-0 z-40 px-4 py-3.5 flex items-center justify-between border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl font-black text-emerald-600 tracking-tight">ZO'R <span class="text-slate-900">market</span></span>
+                <span class="text-2xl font-black text-emerald-400 tracking-tight">ZO'R <span class="text-white">market</span></span>
             </div>
 
             <div class="flex items-center space-x-3">
                 <!-- Language Switcher -->
-                <select id="langSelect" class="bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none">
+                <select id="langSelect" class="bg-slate-900 border border-slate-700 text-slate-200 rounded-xl px-2.5 py-1 text-xs font-semibold focus:outline-none">
                     <option value="uz">UZ</option>
                     <option value="ru">RU</option>
                     <option value="en">EN</option>
                 </select>
 
                 <!-- Cart Button -->
-                <button onclick="toggleCart()" class="relative bg-emerald-50 text-emerald-600 p-2 rounded-xl hover:bg-emerald-100 transition">
+                <button onclick="toggleCart()" class="relative bg-emerald-500/10 text-emerald-400 p-2 rounded-xl hover:bg-emerald-500/20 transition border border-emerald-500/20">
                     <i class="fa-solid fa-cart-shopping text-base"></i>
-                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-emerald-500 text-slate-950 text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black">0</span>
                 </button>
 
                 <!-- Admin Link -->
-                <a href="admin.html" class="bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-emerald-600 transition flex items-center shadow-sm">
+                <a href="admin.html" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-bold hover:opacity-90 transition flex items-center shadow-lg shadow-emerald-500/20">
                     <i class="fa-solid fa-user-shield mr-1"></i> Admin
                 </a>
             </div>
         </header>
 
         <!-- Main Scrollable Area -->
-        <main class="flex-1 overflow-y-auto p-4 space-y-6 pb-20">
+        <main class="flex-1 overflow-y-auto p-4 space-y-6 pb-24 scrollbar-none">
             
-            <!-- Onboarding / Promo Banner (Dribbble Style) -->
-            <div class="relative bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-5 text-white shadow-lg overflow-hidden animate-fade-in-up">
-                <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-xl"></div>
+            <!-- Promo Banner -->
+            <div class="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 rounded-3xl p-5 text-white shadow-xl overflow-hidden animate-fade-in-up border border-emerald-400/20">
+                <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-2xl"></div>
                 <div class="relative z-10 max-w-[220px]">
-                    <span class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Tezkor yetkazish</span>
-                    <h1 class="text-xl font-extrabold mt-2 leading-tight" id="bannerTitle">Fresh Groceries Delivered to Doorstep</h1>
+                    <span class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">⚡ Super Chegirma 50%</span>
+                    <h1 class="text-xl font-black mt-2 leading-tight" id="bannerTitle">Fresh Groceries Delivered to Doorstep</h1>
                     <div class="mt-4 flex items-center space-x-3 text-xs font-medium">
-                        <div><span class="opacity-75 block">Items</span><span class="font-bold text-sm">35+</span></div>
-                        <div class="w-px h-6 bg-white/30"></div>
-                        <div><span class="opacity-75 block">Sifat</span><span class="font-bold text-sm">100% Organic</span></div>
+                        <div><span class="opacity-75 block text-[10px]">Mahsulotlar</span><span class="font-bold text-sm">50+ Turlar</span></div>
+                        <div class="w-px h-6 bg-white/20"></div>
+                        <div><span class="opacity-75 block text-[10px]">Sifat</span><span class="font-bold text-sm text-emerald-300">100% Organic</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- Search Bar -->
             <div class="relative">
-                <input type="text" id="searchInput" placeholder="Mahsulotlarni qidirish..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 transition shadow-sm">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="searchInput" placeholder="Mahsulotlarni qidirish..." class="w-full bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-500 rounded-2xl py-3 pl-11 pr-4 text-xs focus:outline-none focus:border-emerald-500 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500"></i>
             </div>
 
             <!-- Categories Scroll -->
             <div>
                 <div class="flex space-x-3 overflow-x-auto pb-2 scrollbar-none" id="categoriesContainer">
-                    <button onclick="filterCategory('all')" class="cat-btn active-cat bg-emerald-600 text-white px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap shadow-sm transition">Barchasi</button>
-                    <button onclick="filterCategory('fruits')" class="cat-btn cat-item-gradient-fruit text-slate-700 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:shadow transition">🍓 Meva va sabzavot</button>
-                    <button onclick="filterCategory('dairy')" class="cat-btn cat-item-gradient-dairy text-slate-700 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:shadow transition">🥛 Sut mahsulotlari</button>
-                    <button onclick="filterCategory('bakery')" class="cat-btn cat-item-gradient-sweets text-slate-700 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:shadow transition">🥐 Non va pishiriq</button>
-                    <button onclick="filterCategory('sweets')" class="cat-btn cat-item-gradient-fruit text-slate-700 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:shadow transition">🍫 Shirinliklar</button>
+                    <button onclick="filterCategory('all')" class="cat-btn active-cat bg-emerald-500 text-slate-950 px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap shadow-md shadow-emerald-500/20 transition">Barchasi</button>
+                    <button onclick="filterCategory('fruits')" class="cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition">🍓 Meva va sabzavot</button>
+                    <button onclick="filterCategory('dairy')" class="cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition">🥛 Sut mahsulotlari</button>
+                    <button onclick="filterCategory('bakery')" class="cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition">🥐 Non mahsulotlari</button>
+                    <button onclick="filterCategory('sweets')" class="cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition">🍫 Shirinliklar</button>
+                    <button onclick="filterCategory('beverages')" class="cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition">🧃 Ichimliklar</button>
                 </div>
             </div>
 
-            <!-- Products Section Title -->
+            <!-- Section Title -->
             <div class="flex justify-between items-center">
-                <h2 class="font-bold text-base text-slate-900" id="popularTitle">Ommabop mahsulotlar</h2>
-                <span class="text-xs text-emerald-600 font-semibold cursor-pointer">Barchasi</span>
+                <h2 class="font-bold text-sm text-slate-200" id="popularTitle">Ommabop mahsulotlar</h2>
+                <span class="text-xs text-emerald-400 font-semibold cursor-pointer">Barchasi</span>
             </div>
 
             <!-- Products Grid -->
             <div id="productsGrid" class="grid grid-cols-2 gap-3.5">
-                <!-- JS orqali dinamik to'ldiriladi -->
+                <!-- JS orqali to'ldiriladi -->
             </div>
         </main>
 
         <!-- Cart Drawer Slide -->
-        <div id="cartDrawer" class="fixed inset-0 bg-slate-900/40 modal-backdrop-blur opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
-            <div class="w-full max-w-sm bg-white h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cartPanel">
-                <div class="p-4 border-b flex justify-between items-center bg-slate-50">
-                    <h2 class="font-bold text-base" id="cartTitle">Savatcha</h2>
-                    <button onclick="toggleCart()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <div id="cartDrawer" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
+            <div class="w-full max-w-sm bg-slate-900 h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 border-l border-slate-800" id="cartPanel">
+                <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                    <h2 class="font-bold text-sm text-white" id="cartTitle">Savatcha</h2>
+                    <button onclick="toggleCart()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
                 <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3">
                     <!-- Savat elementlari -->
                 </div>
-                <div class="p-4 border-t bg-slate-50 space-y-3">
-                    <div class="flex justify-between font-bold text-base">
-                        <span id="totalLabel">Jami:</span>
-                        <span id="cartTotal" class="text-emerald-600">0 so'm</span>
+                <div class="p-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                    <div class="flex justify-between font-bold text-sm">
+                        <span id="totalLabel" class="text-slate-400">Jami:</span>
+                        <span id="cartTotal" class="text-emerald-400 text-base">0 so'm</span>
                     </div>
                     <div class="space-y-2">
-                        <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-emerald-500">
-                        <input type="text" id="orderAddress" placeholder="Yetkazib berish manzili" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-emerald-500">
-                        <button onclick="checkoutOrder()" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20" id="checkoutBtn">Buyurtma berish</button>
+                        <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full bg-slate-900 border border-slate-800 text-slate-100 rounded-xl p-2.5 text-xs focus:outline-none focus:border-emerald-500">
+                        <input type="text" id="orderAddress" placeholder="Yetkazib berish manzili" class="w-full bg-slate-900 border border-slate-800 text-slate-100 rounded-xl p-2.5 text-xs focus:outline-none focus:border-emerald-500">
+                        <button onclick="checkoutOrder()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 py-3 rounded-xl text-xs font-black hover:opacity-90 transition shadow-lg shadow-emerald-500/20" id="checkoutBtn">Buyurtma berish</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Product Detail / Nutritional Modal -->
-        <div id="productModal" class="fixed inset-0 bg-slate-900/50 modal-backdrop-blur hidden items-center justify-center z-50 p-4">
-            <div class="bg-white rounded-3xl p-5 w-full max-w-sm shadow-2xl animate-scale-in relative">
-                <button onclick="closeProductModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        <!-- Product Detail Modal -->
+        <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 w-full max-w-sm shadow-2xl relative">
+                <button onclick="closeProductModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white bg-slate-800 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
                 <div id="modalContent">
                     <!-- Dinamik ma'lumot -->
                 </div>
@@ -134,11 +135,16 @@
 
         let currentLang = 'uz';
 
+        // Ko'paytirilgan mahsulotlar bazasi
         let products = JSON.parse(localStorage.getItem('zor_products')) || [
-            { id: 1, name: "Qora shokolad", price: 24000, category: "sweets", image: "https://images.unsplash.com/photo-1548592355-d4e5f03767cb?w=400", calories: "320 kcal", protein: "4g", fat: "15g", weight: "100g", desc: "70% organic dark chocolate bar with rich cocoa flavor." },
-            { id: 2, name: "Butun sut 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", calories: "150 kcal", protein: "8g", fat: "3.2g", weight: "1000 ml", desc: "Fresh whole milk pasteurized daily from local farms." },
-            { id: 3, name: "Yangi pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", calories: "45 kcal", protein: "1.2g", fat: "0.2g", weight: "500g", desc: "Vine-ripened fresh organic tomatoes without pesticides." },
-            { id: 4, name: "Kruassan", price: 9000, category: "bakery", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", calories: "280 kcal", protein: "5g", fat: "14g", weight: "80g", desc: "Flaky buttery French croissant baked fresh every morning." }
+            { id: 1, name: "Qora shokolad Premium", price: 24000, category: "sweets", image: "https://images.unsplash.com/photo-1548592355-d4e5f03767cb?w=400", calories: "320 kcal", protein: "4g", fat: "15g", weight: "100g", desc: "70% organic dark chocolate bar with rich cocoa flavor." },
+            { id: 2, name: "Butun tabiiy sut 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", calories: "150 kcal", protein: "8g", fat: "3.2g", weight: "1000 ml", desc: "Fresh whole milk pasteurized daily from local farms." },
+            { id: 3, name: "Yangi qizil pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", calories: "45 kcal", protein: "1.2g", fat: "0.2g", weight: "500g", desc: "Vine-ripened fresh organic tomatoes without pesticides." },
+            { id: 4, name: "Fransuz kruassani", price: 9000, category: "bakery", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", calories: "280 kcal", protein: "5g", fat: "14g", weight: "80g", desc: "Flaky buttery French croissant baked fresh every morning." },
+            { id: 5, name: "Organik banan", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", calories: "105 kcal", protein: "1.3g", fat: "0.3g", weight: "1 kg", desc: "Sweet and fresh tropical bananas rich in potassium." },
+            { id: 6, name: "Yunon yogurti", price: 15000, category: "dairy", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400", calories: "130 kcal", protein: "12g", fat: "4g", weight: "200g", desc: "Creamy and rich Greek style natural yogurt." },
+            { id: 7, name: "Apelsin sharbati 1L", price: 21000, category: "beverages", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400", calories: "110 kcal", protein: "1.7g", fat: "0.2g", weight: "1000 ml", desc: "100% natural freshly squeezed orange juice." },
+            { id: 8, name: "Bodomli shokolad", price: 28000, category: "sweets", image: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400", calories: "450 kcal", protein: "7g", fat: "25g", weight: "100g", desc: "Milk chocolate infused with roasted crispy almonds." }
         ];
 
         let cart = [];
@@ -176,20 +182,20 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-xs">Mahsulot topilmadi</p>`;
+                grid.innerHTML = `<p class="col-span-full text-center text-slate-500 py-10 text-xs">Mahsulot topilmadi</p>`;
                 return;
             }
 
             filtered.forEach(p => {
                 grid.innerHTML += `
-                    <div class="product-card bg-slate-50 border border-slate-100 rounded-2xl p-3 flex flex-col justify-between relative shadow-sm">
+                    <div class="product-card bg-slate-900 border border-slate-800 rounded-2xl p-3 flex flex-col justify-between relative shadow-lg hover:border-emerald-500/50 transition">
                         <div onclick="openProductModal(${p.id})" class="cursor-pointer">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-28 object-cover rounded-xl mb-2.5 bg-white">
-                            <h3 class="font-bold text-xs text-slate-900 mb-1 truncate">${p.name}</h3>
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-32 object-cover rounded-xl mb-2.5 bg-slate-950">
+                            <h3 class="font-bold text-xs text-slate-100 mb-1 truncate">${p.name}</h3>
                         </div>
                         <div>
-                            <div class="font-extrabold text-emerald-600 text-xs mb-2">${p.price.toLocaleString()} so'm</div>
-                            <button onclick="addToCart(${p.id})" class="w-full bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white py-1.5 rounded-xl text-xs font-bold transition shadow-sm">+ Qo'shish</button>
+                            <div class="font-black text-emerald-400 text-xs mb-2.5">${p.price.toLocaleString()} so'm</div>
+                            <button onclick="addToCart(${p.id})" class="w-full bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 py-2 rounded-xl text-xs font-bold transition border border-emerald-500/20 shadow-sm">+ Qo'shish</button>
                         </div>
                     </div>
                 `;
@@ -202,9 +208,9 @@
 
         function filterCategory(cat) {
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.className = "cat-btn bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-100 transition";
+                btn.className = "cat-btn bg-slate-900 text-slate-300 border border-slate-800 px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap hover:bg-slate-800 transition";
             });
-            event.target.className = "cat-btn active-cat bg-emerald-600 text-white px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition shadow-sm";
+            event.target.className = "cat-btn active-cat bg-emerald-500 text-slate-950 px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap shadow-md shadow-emerald-500/20 transition";
             renderProducts(cat, document.getElementById('searchInput').value);
         }
 
@@ -230,110 +236,3 @@
             }
             renderCart();
             toggleCart();
-        }
-
-        function renderCart() {
-            const container = document.getElementById('cartItems');
-            container.innerHTML = '';
-            let total = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-400 py-10 text-xs">Savatchangiz bo'sh</p>`;
-                document.getElementById('cartTotal').innerText = `0 so'm`;
-                document.getElementById('cartBadge').innerText = 0;
-                return;
-            }
-
-            let badgeCount = 0;
-            cart.forEach(item => {
-                total += item.price * item.qty;
-                badgeCount += item.qty;
-                container.innerHTML += `
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <div class="flex items-center space-x-2.5">
-                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl bg-slate-100">
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-800">${item.name}</h4>
-                                <div class="text-[11px] text-emerald-600 font-bold">${item.price.toLocaleString()} so'm</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <button onclick="changeQty(${item.id}, -1)" class="btn-qty bg-slate-100 text-slate-600 text-xs">-</button>
-                            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-                            <button onclick="changeQty(${item.id}, 1)" class="btn-qty bg-slate-100 text-slate-600 text-xs">+</button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.getElementById('cartTotal').innerText = total.toLocaleString() + " so'm";
-            document.getElementById('cartBadge').innerText = badgeCount;
-        }
-
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-            }
-            renderCart();
-        }
-
-        function checkoutOrder() {
-            const phone = document.getElementById('orderPhone').value;
-            const address = document.getElementById('orderAddress').value;
-            if (!phone || !address || cart.length === 0) {
-                alert("Iltimos, telefon raqam, manzilni kiriting va savatchani to'ldiring!");
-                return;
-            }
-
-            const newOrder = {
-                id: Date.now(),
-                phone,
-                address,
-                items: [...cart],
-                total: cart.reduce((sum, i) => sum + (i.price * i.qty), 0),
-                date: new Date().toLocaleString()
-            };
-
-            orders.push(newOrder);
-            localStorage.setItem('zor_orders', JSON.stringify(orders));
-            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
-            cart = [];
-            renderCart();
-            toggleCart();
-        }
-
-        function openProductModal(id) {
-            const p = products.find(prod => prod.id === id);
-            if (!p) return;
-            
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <img src="${p.image}" class="w-full h-40 object-cover rounded-2xl mb-4 bg-slate-100">
-                <h3 class="font-extrabold text-lg text-slate-900 mb-1">${p.name}</h3>
-                <div class="text-emerald-600 font-bold text-sm mb-3">${p.price.toLocaleString()} so'm</div>
-                <p class="text-xs text-slate-500 mb-4 leading-relaxed">${p.desc || "Fresh organic product grown naturally without chemical pesticides."}</p>
-                
-                <div class="grid grid-cols-4 gap-2 bg-slate-50 p-3 rounded-2xl mb-4 text-center">
-                    <div><span class="text-[10px] text-slate-400 block">Calories</span><span class="text-xs font-bold">${p.calories || '120 kcal'}</span></div>
-                    <div><span class="text-[10px] text-slate-400 block">Protein</span><span class="text-xs font-bold">${p.protein || '4g'}</span></div>
-                    <div><span class="text-[10px] text-slate-400 block">Fat</span><span class="text-xs font-bold">${p.fat || '5g'}</span></div>
-                    <div><span class="text-[10px] text-slate-400 block">Weight</span><span class="text-xs font-bold">${p.weight || '100g'}</span></div>
-                </div>
-
-                <button onclick="addToCart(${p.id}); closeProductModal();" class="w-full bg-emerald-600 text-white py-3 rounded-2xl text-xs font-bold hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20">Savatchaga qo'shish</button>
-            `;
-            document.getElementById('productModal').classList.remove('hidden');
-            document.getElementById('productModal').classList.add('flex');
-        }
-
-        function closeProductModal() {
-            document.getElementById('productModal').classList.add('hidden');
-            document.getElementById('productModal').classList.remove('flex');
-        }
-    </script>
-</body>
-</html>
