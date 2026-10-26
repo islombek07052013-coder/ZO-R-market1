@@ -44,7 +44,7 @@
             <!-- Products Tab -->
             <div id="productsTab" class="space-y-6">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-sm mb-3 text-gray-800" id="formTitle">Yangi mahsulot qo'shish</h3>
+                    <h3 class="font-bold text-sm mb-3 text-gray-800" id="formTitle">Mahsulotni qo'shish yoki tahrirlash</h3>
                     <input type="hidden" id="editIndex" value="-1">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                         <input type="text" id="pName" placeholder="Nomi (Masalan: Banan)" class="border p-2.5 rounded-xl text-xs outline-none focus:border-[#7000FF]">
@@ -59,14 +59,20 @@
                             <option value="beverages">Ichimliklar</option>
                         </select>
                     </div>
-                    <div class="mt-3 flex space-x-2">
-                        <button onclick="saveProduct()" id="saveBtn" class="uzum-purple text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:opacity-90 transition">Qo'shish</button>
+                    <!-- Skidka (Arzon narx) yorlig'ini yoqish tugmasi -->
+                    <div class="mt-4 flex items-center space-x-2">
+                        <input type="checkbox" id="pDiscount" class="w-4 h-4 accent-[#7000FF] cursor-pointer">
+                        <label for="pDiscount" class="text-xs font-bold text-gray-700 cursor-pointer">🔥 Skidka ("Arzon narx") yorlig'ini yoqish</label>
+                    </div>
+
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="saveProduct()" id="saveBtn" class="uzum-purple text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:opacity-90 transition">Saqlash</button>
                         <button onclick="resetForm()" id="cancelBtn" class="hidden bg-gray-200 text-gray-700 px-4 py-2.5 rounded-xl text-xs font-bold">Bekor qilish</button>
                     </div>
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-sm mb-3 text-gray-800">Mavjud mahsulotlar (Tahrirlash va o'chirish)</h3>
+                    <h3 class="font-bold text-sm mb-3 text-gray-800">Mavjud mahsulotlar</h3>
                     <div id="productList" class="space-y-2"></div>
                 </div>
             </div>
@@ -97,21 +103,12 @@
         function adminLogin() {
             const email = document.getElementById('adminEmail').value;
             const password = document.getElementById('adminPassword').value;
-            // Maxsus master admin yoki oddiy yozilgan admin
             if (email === "admin@zor.uz" && password === "admin123") {
                 currentUser = { email: email, isAdmin: true };
                 localStorage.setItem('zor_current_user', JSON.stringify(currentUser));
                 showDashboard();
             } else {
-                let users = JSON.parse(localStorage.getItem('zor_users')) || [];
-                let user = users.find(u => u.email === email && u.password === password);
-                if (user && user.isAdmin) {
-                    currentUser = user;
-                    localStorage.setItem('zor_current_user', JSON.stringify(currentUser));
-                    showDashboard();
-                } else {
-                    alert("Xato! Email yoki parol noto'g'ri (Masalan: admin@zor.uz / admin123).");
-                }
+                alert("Xato! Email yoki parol noto'g'ri (admin@zor.uz / admin123).");
             }
         }
 
@@ -153,19 +150,19 @@
             const price = Number(document.getElementById('pPrice').value);
             const image = document.getElementById('pImg').value || "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400";
             const category = document.getElementById('pCat').value;
+            const hasDiscount = document.getElementById('pDiscount').checked; // Skidka holati
 
             if (!name || !price) return alert("Nomi va narxini kiriting!");
 
             if (id === "-1") {
-                // Yangi qo'shish
-                products.push({ id: Date.now(), name, price, category, image, weight: "1 dona", desc: "Sifatli va yangi mahsulot." });
+                products.push({ id: Date.now(), name, price, category, image, hasDiscount, weight: "1 dona", desc: "Sifatli va yangi mahsulot." });
                 alert("Mahsulot qo'shildi!");
             } else {
-                // Mavjudini tahrirlash (Narxini yoki nomini o'zgartirish)
                 products[id].name = name;
                 products[id].price = price;
                 products[id].image = image;
                 products[id].category = category;
+                products[id].hasDiscount = hasDiscount;
                 alert("Mahsulot muvaffaqiyatli o'zgartirildi!");
             }
 
@@ -178,12 +175,13 @@
             const list = document.getElementById('productList');
             list.innerHTML = '';
             products.forEach((p, index) => {
+                let badgeStatus = p.hasDiscount ? '<span class="text-purple-600 font-bold ml-2">(🔥 Skidka yoniq)</span>' : '';
                 list.innerHTML += `
                     <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border text-xs">
                         <div class="flex items-center space-x-3">
                             <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg">
                             <div>
-                                <p class="font-bold text-gray-800">${p.name}</p>
+                                <p class="font-bold text-gray-800">${p.name} ${badgeStatus}</p>
                                 <p class="text-emerald-600 font-extrabold">${Number(p.price).toLocaleString()} so'm</p>
                             </div>
                         </div>
@@ -203,6 +201,7 @@
             document.getElementById('pPrice').value = p.price;
             document.getElementById('pImg').value = p.image;
             document.getElementById('pCat').value = p.category;
+            document.getElementById('pDiscount').checked = p.hasDiscount || false;
             
             document.getElementById('formTitle').innerText = "Mahsulotni tahrirlash";
             document.getElementById('saveBtn').innerText = "Saqlash";
@@ -214,8 +213,9 @@
             document.getElementById('pName').value = '';
             document.getElementById('pPrice').value = '';
             document.getElementById('pImg').value = '';
-            document.getElementById('formTitle').innerText = "Yangi mahsulot qo'shish";
-            document.getElementById('saveBtn').innerText = "Qo'shish";
+            document.getElementById('pDiscount').checked = false;
+            document.getElementById('formTitle').innerText = "Mahsulotni qo'shish yoki tahrirlash";
+            document.getElementById('saveBtn').innerText = "Saqlash";
             document.getElementById('cancelBtn').classList.add('hidden');
         }
 
