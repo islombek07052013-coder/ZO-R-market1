@@ -177,8 +177,11 @@
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
-        // Maxfiy admin kodi (Xohlasangiz islom_9045 o'rniga boshqa kod yozishingiz mumkin)
-        const MY_SECRET_ADMIN_CODE = "islom_9045";
+        // 1. O'ZINGizning TELEFON RAQAMINGIZNI SHU YERGA YOZING (Faqat shu raqam egasi admin bo'la oladi!)
+        const MY_ADMIN_PHONE = "+998996639045"; // O'z raqamingizni yozib qo'ying
+        
+        // 2. Maxfiy kod
+        const MY_SECRET_ADMIN_CODE = "7777";
 
         window.onload = function() { 
             renderProducts(); 
@@ -196,7 +199,7 @@
         }
 
         function submitForceLogin() {
-            const phone = document.getElementById('forceUserPhone').value.trim();
+            const phone = document.getElementById('forceUserPhone'].value.trim();
             if (!phone) { alert("Telefon raqamingizni kiriting!"); return; }
 
             let userData = { phone: phone, isAdmin: false };
@@ -219,17 +222,20 @@
         }
 
         function verifySecretAdmin() {
+            let currentUser = JSON.parse(localStorage.getItem('zor_current_user')) || {};
             const enteredCode = document.getElementById('secretAdminCodeInput').value.trim();
-            if (enteredCode === MY_SECRET_ADMIN_CODE) {
-                let currentUser = JSON.parse(localStorage.getItem('zor_current_user')) || { phone: "Admin" };
+            
+            // TEKSHIRUV: Faqat O'zingizning telefon raqamingiz VA to'g'ri maxfiy kod kiritilgandagina admin bo'ladi!
+            if (currentUser.phone === MY_ADMIN_PHONE && enteredCode === MY_SECRET_ADMIN_CODE) {
                 currentUser.isAdmin = true;
                 localStorage.setItem('zor_current_user', JSON.stringify(currentUser));
                 
                 closeAdminCodeModal();
-                alert("Tabriklaymiz! Maxfiy kod to'g'ri. Sizga Admin huquqi berildi.");
+                alert("Tabriklaymiz! Xush kelibsiz, Admin!");
                 window.location.href = "admin.html";
             } else {
-                alert("Xato maxfiy kod! Bu kod faqat asosiy egasi uchun.");
+                alert("Xato! Bu maxfiy kod va huquq faqat asosiy egasiga tegishli.");
+                closeAdminCodeModal();
             }
         }
 
