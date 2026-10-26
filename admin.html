@@ -20,7 +20,7 @@
                 <input type="email" id="adminEmail" placeholder="Admin Email" class="w-full border border-gray-200 p-3 rounded-xl text-sm outline-none focus:border-[#7000FF]">
                 <input type="password" id="adminPassword" placeholder="Parol" class="w-full border border-gray-200 p-3 rounded-xl text-sm outline-none focus:border-[#7000FF]">
                 <button onclick="adminLogin()" class="w-full uzum-purple text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition">Kirish</button>
-                <a href="index.html" class="block text-center text-xs text-gray-500 hover:underline mt-3">← Asosiy saytga qaytish</a>
+                <a href="./index.html" class="block text-center text-xs text-gray-500 hover:underline mt-3">← Asosiy saytga qaytish</a>
             </div>
         </div>
     </div>
@@ -30,7 +30,8 @@
         <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center border-b">
             <h1 class="text-lg font-black uzum-purple-text"><i class="fa-solid fa-gauge mr-2"></i> ZO'R market - Boshqaruv Paneli</h1>
             <div class="space-x-3">
-                <a href="index.html" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-xs font-bold">Saytga o'tish</a>
+                <!-- Saytga o'tish tugmasi to'g'ri ishlashi uchun nisbiy manzil qo'yildi -->
+                <a href="./index.html" class="bg-purple-100 text-purple-700 hover:bg-purple-200 px-4 py-2 rounded-xl text-xs font-bold transition inline-block">Saytga o'tish</a>
                 <button onclick="adminLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold">Chiqish</button>
             </div>
         </header>
@@ -59,7 +60,7 @@
                             <option value="beverages">Ichimliklar</option>
                         </select>
                     </div>
-                    <!-- Skidka (Arzon narx) yorlig'ini yoqish tugmasi -->
+                    
                     <div class="mt-4 flex items-center space-x-2">
                         <input type="checkbox" id="pDiscount" class="w-4 h-4 accent-[#7000FF] cursor-pointer">
                         <label for="pDiscount" class="text-xs font-bold text-gray-700 cursor-pointer">🔥 Skidka ("Arzon narx") yorlig'ini yoqish</label>
@@ -150,7 +151,7 @@
             const price = Number(document.getElementById('pPrice').value);
             const image = document.getElementById('pImg').value || "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400";
             const category = document.getElementById('pCat').value;
-            const hasDiscount = document.getElementById('pDiscount').checked; // Skidka holati
+            const hasDiscount = document.getElementById('pDiscount').checked;
 
             if (!name || !price) return alert("Nomi va narxini kiriting!");
 
