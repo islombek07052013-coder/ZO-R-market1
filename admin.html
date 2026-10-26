@@ -80,7 +80,6 @@
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
         window.onload = function() {
-            // Faqat admin huquqi borlar kira oladi, bo'lmasa index.html ga qaytariladi
             if (!currentUser || !currentUser.isAdmin) {
                 alert("Sizda bu sahifaga kirish huquqi yo'q!");
                 window.location.href = "index.html";
