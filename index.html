@@ -147,12 +147,12 @@
 
     <script>
         const initialProducts = [
-            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", hasDiscount: true, weight: "1 kg", desc: "Saralangan, shirin va yangi Ekvador bananlari." },
-            { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", hasDiscount: true, weight: "1 kg", desc: "Sersuv va qarsillaydigan tabiiy shirin qizil olma." },
-            { id: 3, name: "Yangi Pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", hasDiscount: false, weight: "1 kg", desc: "Issiqxonada tabiiy yetishtirilgan sersuv pomidor." },
-            { id: 4, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", hasDiscount: false, weight: "1 kg", desc: "Yangi va shirin, qarsillaydigan bodring." },
-            { id: 5, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true, weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
-            { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", hasDiscount: false, weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." }
+            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", weight: "1 kg", desc: "Saralangan, shirin va yangi Ekvador bananlari." },
+            { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", weight: "1 kg", desc: "Sersuv va qarsillaydigan tabiiy shirin qizil olma." },
+            { id: 3, name: "Yangi Pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", weight: "1 kg", desc: "Issiqxonada tabiiy yetishtirilgan sersuv pomidor." },
+            { id: 4, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", weight: "1 kg", desc: "Yangi va shirin, qarsillaydigan bodring." },
+            { id: 5, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
+            { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." }
         ];
 
         let products = JSON.parse(localStorage.getItem('zor_products')) || initialProducts;
@@ -227,15 +227,12 @@
             }
 
             filtered.forEach(p => {
-                // Agar admin skidkani yoqqan bo'lsa "Arzon narx" yorlig'i chiqadi
-                let discountBadge = p.hasDiscount ? `<span class="absolute top-2 left-2 bg-[#7000FF] text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-md">Arzon narx</span>` : '';
-
                 grid.innerHTML += `
                     <div class="bg-white border border-gray-100 rounded-2xl p-3 flex flex-col justify-between shadow-sm hover:shadow-xl transition relative group">
                         <div onclick="openProductModal(${p.id})" class="cursor-pointer">
                             <div class="relative overflow-hidden rounded-xl mb-3 bg-gray-50">
                                 <img src="${p.image}" alt="${p.name}" class="w-full h-40 object-cover group-hover:scale-105 transition duration-300">
-                                ${discountBadge}
+                                <span class="absolute top-2 left-2 bg-[#7000FF] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Arzon narx</span>
                             </div>
                             <h3 class="font-medium text-xs text-gray-800 mb-1 line-clamp-2 h-8">${p.name}</h3>
                             <span class="text-[10px] text-gray-400 font-medium block mb-1">${p.weight || '1 dona'}</span>
@@ -322,6 +319,7 @@
             renderCart();
         }
 
+        // Telegram Bot orqali xabar yuborish funksiyasi
         function sendToTelegram(orderData) {
             const token = "8760617631:AAEEvZqzpHwpFtgBLLsVPNYEgns_wzJu5k";
             const chatId = "8632244174";
@@ -363,9 +361,11 @@
             
             orders.push(newOrder);
             localStorage.setItem('zor_orders', JSON.stringify(orders));
+            
+            // Telegramga xabar yuborish
             sendToTelegram(newOrder);
 
-            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
+            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi va Telegram botingizga yuborildi!");
             cart = [];
             renderCart();
             toggleCart();
