@@ -46,23 +46,14 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-6">
-             <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition">
-    <i class="fa-regular fa-user text-lg mb-0.5"></i>
-    <span>Kirish</span>
-</a>
-                <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
-                    <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
-                    <span>Savat</span>
-                    <span id="cartBadge" class="absolute -top-1 right-2 uzum-purple text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
+            <div class="flex items-center space-x-6" id="rightNavAction">
+                <!-- Bu yer JavaScript orqali faqat sizga Admin, boshqalarga Kirish qilib chiqariladi -->
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
-        <!-- Banner (Uzum tezkor yetkazish yozuvi olib tashlandi) -->
         <div class="relative rounded-3xl overflow-hidden shadow-md bg-gradient-to-r from-purple-700 via-[#7000FF] to-indigo-800 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between">
             <div class="max-w-lg space-y-3 z-10">
                 <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">⚡ ZO'R Market Yetkazish</span>
@@ -113,6 +104,19 @@
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4">
+            <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-700 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-black text-lg text-gray-900 text-center">Tizimga kirish</h3>
+            <p class="text-xs text-gray-500 text-center">Telefon raqamingizni kiriting va shaxsiy kabinetingizga kiring.</p>
+            <div class="space-y-3">
+                <input type="text" id="userPhone" placeholder="+998 (__) ___-__-__" class="w-full border border-gray-200 p-3 rounded-xl text-xs outline-none focus:border-[#7000FF]">
+                <button onclick="userLoginSuccess()" class="w-full uzum-purple text-white py-3 rounded-xl text-xs font-bold transition">Kirish</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
         <div class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cartPanel">
@@ -157,7 +161,60 @@
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
-        window.onload = function() { renderProducts(); };
+        window.onload = function() { 
+            renderProducts(); 
+            checkAdminStatus();
+        };
+
+        function checkAdminStatus() {
+            const nav = document.getElementById('rightNavAction');
+            let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
+            
+            // Agar siz o'z admin panelingizga shu kompyuterda kirgan bo'lsangiz
+            if (currentUser && currentUser.isAdmin) {
+                nav.innerHTML = `
+                    <a href="admin.html" class="flex flex-col items-center text-purple-600 hover:text-[#7000FF] text-xs font-bold transition">
+                        <i class="fa-solid fa-user-shield text-lg mb-0.5"></i>
+                        <span>Admin</span>
+                    </a>
+                    <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
+                        <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
+                        <span>Savat</span>
+                        <span id="cartBadge" class="absolute -top-1 right-2 uzum-purple text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                `;
+            } else {
+                // Do'stingiz yoki boshqalar kirganda faqat "Kirish" chiqadi
+                nav.innerHTML = `
+                    <button onclick="openLoginModal()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition cursor-pointer">
+                        <i class="fa-regular fa-user text-lg mb-0.5"></i>
+                        <span>Kirish</span>
+                    </button>
+                    <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
+                        <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
+                        <span>Savat</span>
+                        <span id="cartBadge" class="absolute -top-1 right-2 uzum-purple text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                    </button>
+                `;
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('flex');
+        }
+
+        function userLoginSuccess() {
+            const phone = document.getElementById('userPhone').value;
+            if(!phone) { alert("Telefon raqamni kiriting!"); return; }
+            alert("Muvaffaqiyatli kirdingiz!");
+            closeLoginModal();
+        }
 
         function renderProducts(filter = 'all', search = '') {
             const grid = document.getElementById('productsGrid');
