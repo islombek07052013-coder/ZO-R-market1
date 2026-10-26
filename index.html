@@ -3,92 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZO'R market - Admin Panel</title>
+    <title>ZO'R market - Internet-do'kon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .uzum-purple { background-color: #7000FF; }
         .uzum-purple-text { color: #7000FF; }
+        .uzum-purple-hover:hover { background-color: #5d00d1; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <a href="#" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center">
+                <span class="bg-[#7000FF] text-white p-1.5 rounded-xl mr-1.5 text-lg"><i class="fa-solid fa-bag-shopping"></i></span> ZO'R market
+            </a>
+            <div class="flex-1 max-w-2xl relative">
+                <input type="text" id="searchInput" placeholder="Mahsulotlar izlash..." class="w-full bg-gray-100 border-2 border-transparent focus:border-[#7000FF] focus:bg-white rounded-xl py-2.5 px-4 text-sm outline-none transition">
+            </div>
+            <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium relative">
+                <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
+                <span>Savat</span>
+                <span id="cartBadge" class="absolute -top-1 right-2 uzum-purple text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+        </div>
+    </header>
 
-    <!-- Parol Oynasi -->
-    <div id="adminLoginModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl text-center space-y-4">
-            <h3 class="font-black text-xl">Admin Panel</h3>
-            <p class="text-xs text-gray-500">Parolni kiriting (`islom_9045`):</p>
-            <input type="password" id="adminSecretInput" placeholder="Parol..." class="w-full border p-3 rounded-xl text-xs text-center outline-none font-bold">
-            <button onclick="checkAdminPassword()" class="w-full bg-red-600 text-white py-3 rounded-xl text-xs font-bold">Kirish</button>
+    <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
+        <div class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cartPanel">
+            <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                <h2 class="font-bold text-lg">Savatchangiz</h2>
+                <button onclick="toggleCart()" class="text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+            <div class="p-4 border-t bg-gray-50 space-y-3">
+                <div class="flex justify-between font-bold">
+                    <span>Jami:</span>
+                    <span id="cartTotal" class="uzum-purple-text">0 so'm</span>
+                </div>
+                <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full border rounded-xl p-3 text-xs">
+                <input type="text" id="orderAddress" placeholder="Manzilingiz" class="w-full border rounded-xl p-3 text-xs">
+                <button onclick="checkoutOrder()" class="w-full uzum-purple text-white py-3 rounded-xl text-xs font-bold">Buyurtma berish</button>
+            </div>
         </div>
     </div>
 
-    <!-- Admin Panel Asosiy Qismi -->
-    <div id="adminDashboard" class="hidden min-h-screen flex flex-col">
-        <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center border-b">
-            <h1 class="text-lg font-black uzum-purple-text">Boshqaruv Paneli</h1>
-            <button onclick="localStorage.removeItem('admin_auth'); location.reload();" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold">Chiqish</button>
-        </header>
-
-        <main class="max-w-4xl mx-auto p-6 flex-1 w-full space-y-6">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border space-y-3">
-                <h3 class="font-bold text-sm">Yangi mahsulot qo'shish</h3>
-                <input type="text" id="pName" placeholder="Nomi" class="w-full border p-2.5 rounded-xl text-xs">
-                <input type="number" id="pPrice" placeholder="Narxi" class="w-full border p-2.5 rounded-xl text-xs">
-                <input type="text" id="pImg" placeholder="Rasm URL" class="w-full border p-2.5 rounded-xl text-xs">
-                <button onclick="saveProduct()" class="uzum-purple text-white px-5 py-2.5 rounded-xl text-xs font-bold">Qo'shish</button>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl shadow-sm border">
-                <h3 class="font-bold text-sm mb-3">Kelib tushgan buyurtmalar</h3>
-                <div id="orderList" class="space-y-3"></div>
-            </div>
-        </main>
-    </div>
-
     <script>
-        const MY_SECRET_PIN = "islom_9045";
+        let products = JSON.parse(localStorage.getItem('zor_products')) || [
+            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400" },
+            { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" }
+        ];
+        let cart = [];
 
-        window.onload = function() {
-            if (sessionStorage.getItem('admin_auth') === "true") showDashboard();
-        }
+        window.onload = function() { renderProducts(); };
 
-        function checkAdminPassword() {
-            if (document.getElementById('adminSecretInput').value.trim() === MY_SECRET_PIN) {
-                sessionStorage.setItem('admin_auth', "true");
-                showDashboard();
-            } else {
-                alert("Xato parol!");
-            }
-        }
-
-        function showDashboard() {
-            document.getElementById('adminLoginModal').classList.add('hidden');
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            renderOrders();
-        }
-
-        function saveProduct() {
-            let name = document.getElementById('pName').value;
-            let price = Number(document.getElementById('pPrice').value);
-            let image = document.getElementById('pImg').value || "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400";
-            if(!name || !price) return alert("To'ldiring!");
-
-            let products = JSON.parse(localStorage.getItem('zor_products')) || [];
-            products.push({ id: Date.now(), name, price, image });
-            localStorage.setItem('zor_products', JSON.stringify(products));
-            alert("Mahsulot qo'shildi! Xaridorlar saytida ko'rinadi.");
-            document.getElementById('pName').value = ''; document.getElementById('pPrice').value = ''; document.getElementById('pImg').value = '';
-        }
-
-        function renderOrders() {
-            let list = document.getElementById('orderList');
-            let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
-            list.innerHTML = orders.length === 0 ? '<p class="text-xs text-gray-400">Buyurtmalar yo‘q</p>' : '';
-            orders.forEach(o => {
-                let itemsStr = o.items.map(i => `${i.name} (${i.qty}ta)`).join(', ');
-                list.innerHTML += `<div class="bg-gray-50 p-3 rounded-xl border text-xs space-y-1"><b>Tel:</b> ${o.phone} | <b>Manzil:</b> ${o.address}<br><b>Mahsulot:</b> ${itemsStr}<br><b class="text-emerald-600">Jami: ${o.total.toLocaleString()} so'm</b> (${o.date})</div>`;
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white border rounded-2xl p-3 flex flex-col justify-between shadow-sm">
+                        <img src="${p.image}" class="w-full h-36 object-cover rounded-xl mb-2">
+                        <h3 class="font-medium text-xs mb-1">${p.name}</h3>
+                        <div class="font-black text-sm mb-2">${Number(p.price).toLocaleString()} so'm</div>
+                        <button onclick="addToCart(${p.id})" class="w-full bg-purple-50 uzum-purple-text hover:bg-[#7000FF] hover:text-white py-2 rounded-xl text-xs font-bold transition">Savatga</button>
+                    </div>
+                `;
             });
+        }
+
+        function toggleCart() {
+            const d = document.getElementById('cartDrawer'), p = document.getElementById('cartPanel');
+            d.classList.toggle('pointer-events-none'); d.classList.toggle('opacity-0');
+            p.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(id) {
+            let p = products.find(x => x.id === id);
+            let item = cart.find(x => x.id === id);
+            if (item) item.qty++; else cart.push({...p, qty: 1});
+            renderCart(); toggleCart();
+        }
+
+        function renderCart() {
+            let container = document.getElementById('cartItems'), total = 0, count = 0;
+            container.innerHTML = '';
+            cart.forEach(i => {
+                total += i.price * i.qty; count += i.qty;
+                container.innerHTML += `<div class="flex justify-between text-xs border-b pb-2"><span>${i.name} (${i.qty}ta)</span> <b>${(i.price*i.qty).toLocaleString()} so'm</b></div>`;
+            });
+            document.getElementById('cartTotal').innerText = total.toLocaleString() + " so'm";
+            document.getElementById('cartBadge').innerText = count;
+        }
+
+        function checkoutOrder() {
+            let phone = document.getElementById('orderPhone').value, address = document.getElementById('orderAddress').value;
+            if(!phone || !address || cart.length === 0) return alert("Ma'lumotlarni to'ldiring!");
+            let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
+            orders.push({ phone, address, items: cart, total: cart.reduce((s,i)=>s+i.price*i.qty,0), date: new Date().toLocaleString() });
+            localStorage.setItem('zor_orders', JSON.stringify(orders));
+            alert("Buyurtma qabul qilindi!"); cart = []; renderCart(); toggleCart();
         }
     </script>
 </body>
