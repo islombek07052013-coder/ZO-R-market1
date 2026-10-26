@@ -102,6 +102,21 @@
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
+    <!-- Forced Login Modal (Saytga kirganda majburiy chiqadiganyna oynasi) -->
+    <div id="forceLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
+            <div class="w-12 h-12 bg-purple-100 uzum-purple-text rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-user-lock"></i>
+            </div>
+            <h3 class="font-black text-xl text-gray-900">Xush kelibsiz!</h3>
+            <p class="text-xs text-gray-500">Saytdan foydalanish uchun telefon raqamingizni kiriting:</p>
+            <div class="space-y-3">
+                <input type="text" id="forceUserPhone" placeholder="+998 (__) ___-__-__" class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
+                <button onclick="submitForceLogin()" class="w-full uzum-purple uzum-purple-hover text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-500/20">Kirish</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
         <div class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cartPanel">
@@ -147,18 +162,39 @@
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
         window.onload = function() { 
-            // O'zingiz admin ekanligingizni avtomatik yoqib qo'yamiz
-            localStorage.setItem('zor_current_user', JSON.stringify({ email: "admin@zor.uz", isAdmin: true }));
-            
             renderProducts(); 
-            checkAdminStatus();
+            checkUserSession();
         };
 
-        function checkAdminStatus() {
-            const nav = document.getElementById('rightNavAction');
+        function checkUserSession() {
             let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
-            
-            if (currentUser && currentUser.isAdmin) {
+            if (!currentUser) {
+                // Agar akkaunt kiritilmagan bo'lsa, oynani chiqaramiz
+                document.getElementById('forceLoginModal').classList.remove('hidden');
+                document.getElementById('forceLoginModal').classList.add('flex');
+            } else {
+                updateNavbar(currentUser);
+            }
+        }
+
+        function submitForceLogin() {
+            const phone = document.getElementById('forceUserPhone').value;
+            if (!phone) { alert("Telefon raqamingizni kiriting!"); return; }
+
+            // Sizning admin ekanligingizni tekshirish uchun maxsus shart (masalan, o'zingizning raqamingizni yozasiz yoki admin sifatida belgilaymiz)
+            // Hozircha o'zingiz uchun istalgan raqamni kiritib, admin qilishingiz mumkin
+            let userData = { phone: phone, isAdmin: true }; // Hammaga hozircha admin huquqi yoki siz belgilagan tartib
+
+            localStorage.setItem('zor_current_user', JSON.stringify(userData));
+            document.getElementById('forceLoginModal').classList.add('hidden');
+            document.getElementById('forceLoginModal').classList.remove('flex');
+            updateNavbar(userData);
+            alert("Muvaffaqiyatli kirdingiz!");
+        }
+
+        function updateNavbar(user) {
+            const nav = document.getElementById('rightNavAction');
+            if (user && user.isAdmin) {
                 nav.innerHTML = `
                     <a href="admin.html" class="flex flex-col items-center text-purple-600 hover:text-[#7000FF] text-xs font-bold transition">
                         <i class="fa-solid fa-user-shield text-lg mb-0.5"></i>
@@ -172,10 +208,10 @@
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openLoginModal()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition cursor-pointer">
-                        <i class="fa-regular fa-user text-lg mb-0.5"></i>
-                        <span>Kirish</span>
-                    </button>
+                    <div class="flex flex-col items-center text-gray-600 text-xs font-medium">
+                        <i class="fa-solid fa-user-check text-lg mb-0.5 text-purple-600"></i>
+                        <span>${user.phone}</span>
+                    </div>
                     <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
                         <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
                         <span>Savat</span>
@@ -321,14 +357,16 @@
         }
 
         function checkoutOrder() {
-            const phone = document.getElementById('orderPhone').value;
+            let currentUser = JSON.parse(localStorage.getItem('zor_current_user')) || {};
+            const phone = document.getElementById('orderPhone').value || currentUser.phone;
             const address = document.getElementById('orderAddress').value;
-            if (!phone || !address || cart.length === 0) {
-                alert("Iltimos, telefon raqam va manzilni to'ldiring!");
+            
+            if (!address || cart.length === 0) {
+                alert("Iltimos, yetkazib berish manzilini kiriting!");
                 return;
             }
             const newOrder = {
-                id: Date.now(), phone, address, items: [...cart],
+                id: Date.now(), phone: phone, address, items: [...cart],
                 total: cart.reduce((sum, i) => sum + (i.price * i.qty), 0),
                 date: new Date().toLocaleString()
             };
