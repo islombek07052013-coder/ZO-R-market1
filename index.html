@@ -33,12 +33,6 @@
             </div>
 
             <div class="flex items-center space-x-6">
-                <!-- ADMIN KIRISHTIRISH TUGMASI (Qulfcha) -->
-                <button onclick="promptAdminLogin()" class="flex flex-col items-center text-gray-400 hover:text-red-600 text-xs font-medium transition" title="Admin panelga kirish">
-                    <i class="fa-solid fa-lock text-lg mb-0.5"></i>
-                    <span>Admin</span>
-                </button>
-
                 <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
                     <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
                     <span>Savat</span>
@@ -115,14 +109,14 @@
         </div>
     </div>
 
-    <!-- Admin Parol So'rash Oynasi -->
+    <!-- Maxfiy Admin Kod Oynasi -->
     <div id="adminCodeModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
             <button onclick="closeAdminCodeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-700"><i class="fa-solid fa-xmark"></i></button>
             <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
-            <h3 class="font-black text-xl text-gray-900">Admin Paroli</h3>
+            <h3 class="font-black text-xl text-gray-900">Admin Maxfiy Kodi</h3>
             <p class="text-xs text-gray-500">Maxfiy parolni kiriting:</p>
             <div class="space-y-3">
                 <input type="password" id="secretAdminCodeInput" placeholder="Parol..." class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
@@ -167,7 +161,7 @@
             { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", hasDiscount: true, weight: "1 kg", desc: "Sersuv va qarsillaydigan tabiiy shirin qizil olma." },
             { id: 3, name: "Yangi Pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", hasDiscount: false, weight: "1 kg", desc: "Issiqxonada tabiiy yetishtirilgan sersuv pomidor." },
             { id: 4, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", hasDiscount: false, weight: "1 kg", desc: "Yangi va shirin, qarsillaydigan bodring." },
-            { id: 5, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true, weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
+            { id: 5, name: "Tabiiy Sut 3.2% 1L", file: "", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true, weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
             { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", hasDiscount: false, weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." }
         ];
 
@@ -186,6 +180,15 @@
             }
         };
 
+        // MAXFIY KOMBINATSIYA: Klavaturadan Ctrl + Shift + A ni bosganda admin oynasi chiqadi
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key.toUpperCase() === 'A') {
+                event.preventDefault();
+                document.getElementById('adminCodeModal').classList.remove('hidden');
+                document.getElementById('adminCodeModal').classList.add('flex');
+            }
+        });
+
         function submitForceLogin() {
             const phone = document.getElementById('forceUserPhone').value.trim();
             if (!phone) { alert("Telefon raqamingizni kiriting!"); return; }
@@ -193,11 +196,6 @@
             document.getElementById('forceLoginModal').classList.add('hidden');
             document.getElementById('forceLoginModal').classList.remove('flex');
             alert("Muvaffaqiyatli kirdingiz!");
-        }
-
-        function promptAdminLogin() {
-            document.getElementById('adminCodeModal').classList.remove('hidden');
-            document.getElementById('adminCodeModal').classList.add('flex');
         }
 
         function closeAdminCodeModal() {
