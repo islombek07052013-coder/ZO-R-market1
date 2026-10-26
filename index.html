@@ -102,7 +102,7 @@
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
-    <!-- Forced Login Modal (Saytga kirganda majburiy chiqadiganyna oynasi) -->
+    <!-- Majburiy Kirish Oynasi -->
     <div id="forceLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
             <div class="w-12 h-12 bg-purple-100 uzum-purple-text rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
@@ -161,6 +161,9 @@
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
+        // O'ZINGIZNING TELEFON RAQAMINGIZNI SHU YERGA YOZING (Faqat shu raqam admin bo'ladi!)
+        const MY_ADMIN_PHONE = "+998996639045"; // Masalan o'zingizning raqamingiz
+
         window.onload = function() { 
             renderProducts(); 
             checkUserSession();
@@ -169,7 +172,6 @@
         function checkUserSession() {
             let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
             if (!currentUser) {
-                // Agar akkaunt kiritilmagan bo'lsa, oynani chiqaramiz
                 document.getElementById('forceLoginModal').classList.remove('hidden');
                 document.getElementById('forceLoginModal').classList.add('flex');
             } else {
@@ -178,23 +180,30 @@
         }
 
         function submitForceLogin() {
-            const phone = document.getElementById('forceUserPhone').value;
+            const phone = document.getElementById('forceUserPhone').value.trim();
             if (!phone) { alert("Telefon raqamingizni kiriting!"); return; }
 
-            // Sizning admin ekanligingizni tekshirish uchun maxsus shart (masalan, o'zingizning raqamingizni yozasiz yoki admin sifatida belgilaymiz)
-            // Hozircha o'zingiz uchun istalgan raqamni kiritib, admin qilishingiz mumkin
-            let userData = { phone: phone, isAdmin: true }; // Hammaga hozircha admin huquqi yoki siz belgilagan tartib
+            // Faqat sizning raqamingiz kiritilsagina isAdmin = true bo'ladi, boshqalarga false!
+            let isAdminUser = (phone === MY_ADMIN_PHONE);
+
+            let userData = { phone: phone, isAdmin: isAdminUser };
 
             localStorage.setItem('zor_current_user', JSON.stringify(userData));
             document.getElementById('forceLoginModal').classList.add('hidden');
             document.getElementById('forceLoginModal').classList.remove('flex');
             updateNavbar(userData);
-            alert("Muvaffaqiyatli kirdingiz!");
+            
+            if(isAdminUser) {
+                alert("Xush kelibsiz, Admin!");
+            } else {
+                alert("Muvaffaqiyatli kirdingiz!");
+            }
         }
 
         function updateNavbar(user) {
             const nav = document.getElementById('rightNavAction');
             if (user && user.isAdmin) {
+                // FAQAT SIZGA ADMIN TUGMASI CHIQADI
                 nav.innerHTML = `
                     <a href="admin.html" class="flex flex-col items-center text-purple-600 hover:text-[#7000FF] text-xs font-bold transition">
                         <i class="fa-solid fa-user-shield text-lg mb-0.5"></i>
@@ -207,6 +216,7 @@
                     </button>
                 `;
             } else {
+                // DO'STINGIZ VA BOSHQALARGA FAQAT ULARNING RAQAMI VA SAVAT CHIQADI (ADMIN YO'Q)
                 nav.innerHTML = `
                     <div class="flex flex-col items-center text-gray-600 text-xs font-medium">
                         <i class="fa-solid fa-user-check text-lg mb-0.5 text-purple-600"></i>
