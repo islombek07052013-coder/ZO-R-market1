@@ -103,7 +103,7 @@
     </main>
 
     <!-- Majburiy Kirish Oynasi -->
-    <div id="forceLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div id="forceLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
             <div class="w-12 h-12 bg-purple-100 uzum-purple-text rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
                 <i class="fa-solid fa-user-lock"></i>
@@ -113,6 +113,22 @@
             <div class="space-y-3">
                 <input type="text" id="forceUserPhone" placeholder="+998 (__) ___-__-__" class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
                 <button onclick="submitForceLogin()" class="w-full uzum-purple uzum-purple-hover text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-500/20">Kirish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Maxfiy Kod Oynasi -->
+    <div id="adminCodeModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
+            <button onclick="closeAdminCodeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-700"><i class="fa-solid fa-xmark"></i></button>
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="font-black text-xl text-gray-900">Admin Maxfiy Kodi</h3>
+            <p class="text-xs text-gray-500">Faqat asosiy boshqaruvchi uchun maxfiy kodni kiriting:</p>
+            <div class="space-y-3">
+                <input type="password" id="secretAdminCodeInput" placeholder="Maxfiy kod..." class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
+                <button onclick="verifySecretAdmin()" class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg">Tasdiqlash</button>
             </div>
         </div>
     </div>
@@ -161,8 +177,8 @@
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
-        // O'ZINGIZNING TELEFON RAQAMINGIZNI SHU YERGA YOZING (Faqat shu raqam admin bo'ladi!)
-        const MY_ADMIN_PHONE = "+998996639045"; // Masalan o'zingizning raqamingiz
+        // Maxfiy admin kodi (7777)
+        const MY_SECRET_ADMIN_CODE = "7777";
 
         window.onload = function() { 
             renderProducts(); 
@@ -183,27 +199,43 @@
             const phone = document.getElementById('forceUserPhone').value.trim();
             if (!phone) { alert("Telefon raqamingizni kiriting!"); return; }
 
-            // Faqat sizning raqamingiz kiritilsagina isAdmin = true bo'ladi, boshqalarga false!
-            let isAdminUser = (phone === MY_ADMIN_PHONE);
-
-            let userData = { phone: phone, isAdmin: isAdminUser };
-
+            let userData = { phone: phone, isAdmin: false };
             localStorage.setItem('zor_current_user', JSON.stringify(userData));
+            
             document.getElementById('forceLoginModal').classList.add('hidden');
             document.getElementById('forceLoginModal').classList.remove('flex');
             updateNavbar(userData);
-            
-            if(isAdminUser) {
-                alert("Xush kelibsiz, Admin!");
+            alert("Muvaffaqiyatli kirdingiz!");
+        }
+
+        function promptAdminCode() {
+            document.getElementById('adminCodeModal').classList.remove('hidden');
+            document.getElementById('adminCodeModal').classList.add('flex');
+        }
+
+        function closeAdminCodeModal() {
+            document.getElementById('adminCodeModal').classList.add('hidden');
+            document.getElementById('adminCodeModal').classList.remove('flex');
+        }
+
+        function verifySecretAdmin() {
+            const enteredCode = document.getElementById('secretAdminCodeInput').value.trim();
+            if (enteredCode === MY_SECRET_ADMIN_CODE) {
+                let currentUser = JSON.parse(localStorage.getItem('zor_current_user')) || { phone: "Admin" };
+                currentUser.isAdmin = true;
+                localStorage.setItem('zor_current_user', JSON.stringify(currentUser));
+                
+                closeAdminCodeModal();
+                alert("Tabriklaymiz! Maxfiy kod to'g'ri. Sizga Admin huquqi berildi.");
+                window.location.href = "admin.html";
             } else {
-                alert("Muvaffaqiyatli kirdingiz!");
+                alert("Xato maxfiy kod! Bu kod faqat asosiy egasi uchun.");
             }
         }
 
         function updateNavbar(user) {
             const nav = document.getElementById('rightNavAction');
             if (user && user.isAdmin) {
-                // FAQAT SIZGA ADMIN TUGMASI CHIQADI
                 nav.innerHTML = `
                     <a href="admin.html" class="flex flex-col items-center text-purple-600 hover:text-[#7000FF] text-xs font-bold transition">
                         <i class="fa-solid fa-user-shield text-lg mb-0.5"></i>
@@ -216,12 +248,11 @@
                     </button>
                 `;
             } else {
-                // DO'STINGIZ VA BOSHQALARGA FAQAT ULARNING RAQAMI VA SAVAT CHIQADI (ADMIN YO'Q)
                 nav.innerHTML = `
-                    <div class="flex flex-col items-center text-gray-600 text-xs font-medium">
-                        <i class="fa-solid fa-user-check text-lg mb-0.5 text-purple-600"></i>
-                        <span>${user.phone}</span>
-                    </div>
+                    <button onclick="promptAdminCode()" class="flex flex-col items-center text-gray-400 hover:text-purple-600 text-xs font-medium transition" title="Admin kirish">
+                        <i class="fa-solid fa-lock text-lg mb-0.5"></i>
+                        <span>Kirish</span>
+                    </button>
                     <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
                         <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
                         <span>Savat</span>
