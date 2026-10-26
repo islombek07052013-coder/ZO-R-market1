@@ -32,7 +32,8 @@
 
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <div class="flex items-center space-x-6">
-                <a href="./index.html" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center">
+                <!-- MAXFIY JOY: Faqat shu ZO'R market yozuviga bosganda admin kodini so'raydigan oyna chiqadi -->
+                <a href="#" onclick="secretAdminTrigger(event)" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center select-none" title="Asosiy do'kon">
                     <span class="bg-[#7000FF] text-white p-1.5 rounded-xl mr-1.5 text-lg"><i class="fa-solid fa-bag-shopping"></i></span> ZO'R market
                 </a>
             </div>
@@ -46,7 +47,6 @@
                 </div>
             </div>
 
-            <!-- FAQAT SAVAT TUGMASI QOLDI. ADMIN HAQIDA HECH QANDAY IZ YO'Q! -->
             <div class="flex items-center space-x-6">
                 <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
                     <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
@@ -109,7 +109,7 @@
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
-    <!-- Majburiy Kirish Oynasi (Telefon raqam so'rash) -->
+    <!-- Majburiy Kirish Oynasi -->
     <div id="forceLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
             <div class="w-12 h-12 bg-purple-100 uzum-purple-text rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
@@ -120,6 +120,22 @@
             <div class="space-y-3">
                 <input type="text" id="forceUserPhone" placeholder="+998 (__) ___-__-__" class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
                 <button onclick="submitForceLogin()" class="w-full uzum-purple uzum-purple-hover text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-500/20">Kirish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maxfiy Admin Kod Oynasi -->
+    <div id="adminCodeModal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
+            <button onclick="closeAdminCodeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-700"><i class="fa-solid fa-xmark"></i></button>
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="font-black text-xl text-gray-900">Admin Maxfiy Kodi</h3>
+            <p class="text-xs text-gray-500">Maxfiy parolni kiriting:</p>
+            <div class="space-y-3">
+                <input type="password" id="secretAdminCodeInput" placeholder="Maxfiy kod..." class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
+                <button onclick="verifySecretAdmin()" class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg">Tasdiqlash</button>
             </div>
         </div>
     </div>
@@ -168,6 +184,9 @@
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
+        // Yangi maxfiy parol
+        const MY_SECRET_ADMIN_CODE = "islom_9045";
+
         window.onload = function() { 
             renderProducts(); 
             let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
@@ -184,6 +203,31 @@
             document.getElementById('forceLoginModal').classList.add('hidden');
             document.getElementById('forceLoginModal').classList.remove('flex');
             alert("Muvaffaqiyatli kirdingiz!");
+        }
+
+        // "ZO'R market" so'zini bosganda ishlaydigan maxfiy funksiya
+        function secretAdminTrigger(event) {
+            event.preventDefault(); // Sahifa boshqa joyga sakrab ketmasligi uchun
+            document.getElementById('adminCodeModal').classList.remove('hidden');
+            document.getElementById('adminCodeModal').classList.add('flex');
+        }
+
+        function closeAdminCodeModal() {
+            document.getElementById('adminCodeModal').classList.add('hidden');
+            document.getElementById('adminCodeModal').classList.remove('flex');
+        }
+
+        function verifySecretAdmin() {
+            const enteredCode = document.getElementById('secretAdminCodeInput').value.trim();
+            if (enteredCode === MY_SECRET_ADMIN_CODE) {
+                sessionStorage.setItem('zor_admin_auth', "true");
+                closeAdminCodeModal();
+                alert("Xush kelibsiz, Admin!");
+                window.location.href = "admin.html";
+            } else {
+                alert("Xato maxfiy kod!");
+                closeAdminCodeModal();
+            }
         }
 
         function renderProducts(filter = 'all', search = '') {
