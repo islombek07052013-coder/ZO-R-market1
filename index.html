@@ -46,9 +46,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-6" id="rightNavAction">
-                <!-- Bu yer JavaScript orqali faqat sizga Admin, boshqalarga Kirish qilib chiqariladi -->
-            </div>
+            <div class="flex items-center space-x-6" id="rightNavAction"></div>
         </div>
     </header>
 
@@ -170,7 +168,6 @@
             const nav = document.getElementById('rightNavAction');
             let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
             
-            // Agar siz o'z admin panelingizga shu kompyuterda kirgan bo'lsangiz
             if (currentUser && currentUser.isAdmin) {
                 nav.innerHTML = `
                     <a href="admin.html" class="flex flex-col items-center text-purple-600 hover:text-[#7000FF] text-xs font-bold transition">
@@ -184,7 +181,6 @@
                     </button>
                 `;
             } else {
-                // Do'stingiz yoki boshqalar kirganda faqat "Kirish" chiqadi
                 nav.innerHTML = `
                     <button onclick="openLoginModal()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition cursor-pointer">
                         <i class="fa-regular fa-user text-lg mb-0.5"></i>
@@ -323,6 +319,33 @@
             renderCart();
         }
 
+        // Telegram Bot orqali xabar yuborish funksiyasi
+        function sendToTelegram(orderData) {
+            const token = "8760617631:AAEEvZqzpHwpFtgBLLsVPNYEgns_wzJu5k";
+            const chatId = "8632244174";
+            
+            let itemsText = orderData.items.map(i => `• ${i.name} (${i.qty} ta) - ${(i.price * i.qty).toLocaleString()} so'm`).join('\n');
+            
+            let message = `🛒 **Yangi buyurtma keldi!**\n\n` +
+                          `📞 **Tel:** ${orderData.phone}\n` +
+                          `📍 **Manzil:** ${orderData.address}\n\n` +
+                          `📦 **Mahsulotlar:**\n${itemsText}\n\n` +
+                          `💰 **Jami summa:** ${Number(orderData.total).toLocaleString()} so'm\n` +
+                          `🕒 **Vaqti:** ${orderData.date}`;
+
+            let url = `https://api.telegram.org/bot${token}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            }).catch(err => console.log('Telegram xatolik:', err));
+        }
+
         function checkoutOrder() {
             const phone = document.getElementById('orderPhone').value;
             const address = document.getElementById('orderAddress').value;
@@ -335,9 +358,14 @@
                 total: cart.reduce((sum, i) => sum + (i.price * i.qty), 0),
                 date: new Date().toLocaleString()
             };
+            
             orders.push(newOrder);
             localStorage.setItem('zor_orders', JSON.stringify(orders));
-            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
+            
+            // Telegramga xabar yuborish
+            sendToTelegram(newOrder);
+
+            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi va Telegram botingizga yuborildi!");
             cart = [];
             renderCart();
             toggleCart();
