@@ -12,8 +12,25 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- Admin Dashboard -->
-    <div id="adminDashboard" class="min-h-screen flex flex-col">
+
+    <!-- Admin Parol So'rash Oynasi -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl relative space-y-4 text-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="font-black text-xl text-gray-900">Admin Boshqaruvi</h3>
+            <p class="text-xs text-gray-500">Bu sahifaga kirish uchun maxfiy kodni kiriting:</p>
+            <div class="space-y-3">
+                <input type="password" id="adminSecretInput" placeholder="Maxfiy kod (masalan: 7777)" class="w-full border border-gray-200 p-3 rounded-xl text-xs text-center outline-none focus:border-[#7000FF] font-bold">
+                <button onclick="checkAdminPassword()" class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg">Kirish</button>
+                <a href="./index.html" class="block text-xs text-gray-400 hover:underline pt-2">← Asosiy saytga qaytish</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (Asl Panel) -->
+    <div id="adminDashboard" class="hidden min-h-screen flex flex-col">
         <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center border-b">
             <h1 class="text-lg font-black uzum-purple-text"><i class="fa-solid fa-gauge mr-2"></i> ZO'R market - Boshqaruv Paneli</h1>
             <div class="space-x-3">
@@ -75,23 +92,39 @@
     </div>
 
     <script>
-        let currentUser = JSON.parse(localStorage.getItem('zor_current_user'));
+        // Maxfiy admin kodi (Xohlasangiz buni o'zgartirishingiz mumkin)
+        const MY_SECRET_PIN = "7777";
+
         let products = JSON.parse(localStorage.getItem('zor_products')) || [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
         window.onload = function() {
-            if (!currentUser || !currentUser.isAdmin) {
-                alert("Sizda bu sahifaga kirish huquqi yo'q!");
-                window.location.href = "index.html";
-            } else {
-                renderProducts();
-                renderOrders();
+            let isVerified = sessionStorage.getItem('zor_admin_auth');
+            if (isVerified === "true") {
+                showDashboard();
             }
         }
 
+        function checkAdminPassword() {
+            const entered = document.getElementById('adminSecretInput').value.trim();
+            if (entered === MY_SECRET_PIN) {
+                sessionStorage.setItem('zor_admin_auth', "true");
+                showDashboard();
+            } else {
+                alert("Xato kod! Kirish taqiqlanadi.");
+                window.location.href = "index.html";
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            renderProducts();
+            renderOrders();
+        }
+
         function adminLogout() {
-            currentUser.isAdmin = false;
-            localStorage.setItem('zor_current_user', JSON.stringify(currentUser));
+            sessionStorage.removeItem('zor_admin_auth');
             window.location.href = "index.html";
         }
 
@@ -160,13 +193,14 @@
         }
 
         function editProduct(index) {
-            const p = products[index];
+            const p = products.index; // index
+            const prod = products[index];
             document.getElementById('editIndex').value = index;
-            document.getElementById('pName').value = p.name;
-            document.getElementById('pPrice').value = p.price;
-            document.getElementById('pImg').value = p.image;
-            document.getElementById('pCat').value = p.category;
-            document.getElementById('pDiscount').checked = p.hasDiscount || false;
+            document.getElementById('pName').value = prod.name;
+            document.getElementById('pPrice').value = prod.price;
+            document.getElementById('pImg').value = prod.image;
+            document.getElementById('pCat').value = prod.category;
+            document.getElementById('pDiscount').checked = prod.hasDiscount || false;
             
             document.getElementById('formTitle').innerText = "Mahsulotni tahrirlash";
             document.getElementById('saveBtn').innerText = "Saqlash";
