@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZO'R market - Internet-do'kon</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .uzum-purple { background-color: #7000FF; }
@@ -18,7 +16,6 @@
 
     <!-- Top Navigation Bar -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <!-- Top sub-menu -->
         <div class="bg-gray-50 text-xs text-gray-500 py-1.5 px-4 hidden md:block">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -29,29 +26,17 @@
                     <span>Sotuvchi bo'lish</span>
                     <span>Savol-javob</span>
                     <span>Buyurtmalarim</span>
-                    <select id="langSelect" class="bg-transparent font-medium cursor-pointer focus:outline-none">
-                        <option value="uz">O'zbekcha</option>
-                        <option value="ru">Русский</option>
-                        <option value="en">English</option>
-                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- Main Header -->
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Logo -->
             <div class="flex items-center space-x-6">
                 <a href="#" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center">
                     <span class="bg-[#7000FF] text-white p-1.5 rounded-xl mr-1.5 text-lg"><i class="fa-solid fa-bag-shopping"></i></span> ZO'R market
                 </a>
-                <button class="hidden lg:flex items-center space-x-2 bg-purple-50 uzum-purple-text px-4 py-2 rounded-xl text-sm font-bold hover:bg-purple-100 transition">
-                    <i class="fa-solid fa-bars"></i>
-                    <span>Katalog</span>
-                </button>
             </div>
 
-            <!-- Search Bar -->
             <div class="flex-1 max-w-2xl relative">
                 <div class="flex">
                     <input type="text" id="searchInput" placeholder="Mahsulotlar va turkumlar izlash..." class="w-full bg-gray-100 border-2 border-transparent focus:border-[#7000FF] focus:bg-white rounded-l-xl py-2.5 pl-4 pr-4 text-sm outline-none transition">
@@ -61,11 +46,10 @@
                 </div>
             </div>
 
-            <!-- User Actions -->
-            <div class="flex items-center space-x-4 md:space-x-6">
-                <a href="admin.html" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition">
-                    <i class="fa-solid fa-user-shield text-lg mb-0.5"></i>
-                    <span>Admin</span>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition">
+                    <i class="fa-regular fa-user text-lg mb-0.5"></i>
+                    <span>Kirish</span>
                 </a>
                 <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium transition relative">
                     <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
@@ -76,23 +60,21 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
-
-        <!-- Food Delivery Grocery Banner -->
+        <!-- Banner (Uzum tezkor yetkazish yozuvi olib tashlandi) -->
         <div class="relative rounded-3xl overflow-hidden shadow-md bg-gradient-to-r from-purple-700 via-[#7000FF] to-indigo-800 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between">
             <div class="max-w-lg space-y-3 z-10">
-                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">⚡ Uzum Tezkor Yetkazish</span>
+                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">⚡ ZO'R Market Yetkazish</span>
                 <h1 class="text-2xl md:text-4xl font-black tracking-tight leading-tight">Yangi va sifatli oziq-ovqat mahsulotlari!</h1>
-                <p class="text-xs md:text-sm text-purple-200">Uyingizgacha 30 daqiqada tezkor va bepul yetkazib beramiz.</p>
+                <p class="text-xs md:text-sm text-purple-200">Uyingizgacha 30 daqiqada tezkor va ishonchli yetkazib beramiz.</p>
             </div>
             <div class="mt-4 md:mt-0 z-10">
                 <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500" alt="Fresh Groceries" class="w-72 md:w-80 rounded-2xl shadow-xl object-cover h-44">
             </div>
-            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-purple-400/20 rounded-full blur-2xl"></div>
         </div>
 
-        <!-- Categories Row -->
+        <!-- Categories -->
         <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
             <button onclick="filterCategory('all')" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center">
                 <div class="w-10 h-10 bg-purple-50 uzum-purple-text rounded-full flex items-center justify-center text-base mb-1.5"><i class="fa-solid fa-border-all"></i></div>
@@ -124,29 +106,21 @@
             </button>
         </div>
 
-        <!-- Section Header -->
         <div class="flex justify-between items-center pt-2">
             <h2 class="text-xl md:text-2xl font-black text-gray-900 tracking-tight">Ommabop mahsulotlar</h2>
-            <span class="uzum-purple-text font-bold text-sm cursor-pointer hover:underline">Barchasini ko'rish →</span>
         </div>
 
-        <!-- Products Grid (Uzum Market Card Style) -->
-        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <!-- Dinamik mahsulotlar -->
-        </div>
-
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
-    <!-- Uzum Style Cart Drawer -->
+    <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex justify-end">
         <div class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cartPanel">
             <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
                 <h2 class="font-bold text-lg text-gray-900">Savatchangiz</h2>
                 <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4">
-                <!-- Savat elementlari -->
-            </div>
+            <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
             <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
                 <div class="flex justify-between font-bold text-base">
                     <span class="text-gray-600">Jami to'lov:</span>
@@ -161,7 +135,7 @@
         </div>
     </div>
 
-    <!-- Product Detail Modal -->
+    <!-- Product Modal -->
     <div id="productModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl relative">
             <button onclick="closeProductModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-700 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
@@ -169,44 +143,25 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        // Ko'paytirilgan sifatli mahsulotlar bazasi
         const initialProducts = [
             { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", weight: "1 kg", desc: "Saralangan, shirin va yangi Ekvador bananlari." },
             { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", weight: "1 kg", desc: "Sersuv va qarsillaydigan tabiiy shirin qizil olma." },
             { id: 3, name: "Yangi Pomidor", price: 18000, category: "fruits", image: "https://images.unsplash.com/photo-1546094096-0df4bca75d74?w=400", weight: "1 kg", desc: "Issiqxonada tabiiy yetishtirilgan sersuv pomidor." },
             { id: 4, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", weight: "1 kg", desc: "Yangi va shirin, qarsillaydigan bodring." },
             { id: 5, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", weight: "1 Litr", desc: "Pasterizatsiyalangan, toza va tabiiy sut." },
-            { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." },
-            { id: 7, name: "Yunon yogurti 200g", price: 15000, category: "dairy", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400", weight: "200 g", desc: "Quyuq va mazali tabiiy Yunon yogurti." },
-            { id: 8, name: "Sariyog' Nestlé 82.5%", price: 34000, category: "dairy", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400", weight: "200 g", desc: "Yuqori sifatli va xushbo'y sariyog'." },
-            { id: 9, name: "Toshkent tandir noni", price: 4500, category: "bakery", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", weight: "1 dona", desc: "Issiq va qirsim tandir noni." },
-            { id: 10, name: "Fransuz kruassani", price: 9000, category: "bakery", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400", weight: "80 g", desc: "Sariyog'li va yumshoq fransuz kruassani." },
-            { id: 11, name: "Qora Shokolad Nestlé", price: 24000, category: "sweets", image: "https://images.unsplash.com/photo-1548592355-d4e5f03767cb?w=400", weight: "100 g", desc: "70% kakao tarkibli sifatli achchiq shokolad." },
-            { id: 12, name: "Bodomli Shokolad", price: 28000, category: "sweets", image: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400", weight: "100 g", desc: "Qovurilgan bodom va sutli shokolad." },
-            { id: 13, name: "Mol go'shti (Lohas)", price: 95000, category: "meat", image: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400", weight: "1 kg", desc: "Yangi va yumshoq saralangan mol go'shti." },
-            { id: 14, name: "Tovuq lahm go'shti", price: 48000, category: "meat", image: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400", weight: "1 kg", desc: "Semiz va parhezli tovuq ko'krak go'shti." },
-            { id: 15, name: "Apelsin Sharvati 1L", price: 21000, category: "beverages", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400", weight: "1 Litr", desc: "100% tabiiy va vitaminli apelsin sharbati." },
-            { id: 16, name: "Coca-Cola Classic 1.5L", price: 13500, category: "beverages", image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400", weight: "1.5 Litr", desc: "Maza beruvchi salqin gazlangan ichimlik." }
+            { id: 6, name: "Qishloq tuxumi (10 dona)", price: 17000, category: "dairy", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400", weight: "10 dona", desc: "Yangi va saralangan tovuq tuxumlari." }
         ];
 
-        // Har doim eng yangi mahsulotlar bazasi ko'rinishini ta'minlash
-        let storedProducts = JSON.parse(localStorage.getItem('zor_products'));
-        let products = (storedProducts && storedProducts.length >= initialProducts.length) ? storedProducts : initialProducts;
-        localStorage.setItem('zor_products', JSON.stringify(products));
-
+        let products = JSON.parse(localStorage.getItem('zor_products')) || initialProducts;
         let cart = [];
         let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
 
-        window.onload = function() {
-            renderProducts();
-        };
+        window.onload = function() { renderProducts(); };
 
         function renderProducts(filter = 'all', search = '') {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
-
             let filtered = products.filter(p => {
                 let matchCat = filter === 'all' || p.category === filter;
                 let matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
@@ -230,7 +185,7 @@
                             <span class="text-[10px] text-gray-400 font-medium block mb-1">${p.weight || '1 dona'}</span>
                         </div>
                         <div>
-                            <div class="font-black text-gray-900 text-sm mb-2.5">${p.price.toLocaleString()} so'm</div>
+                            <div class="font-black text-gray-900 text-sm mb-2.5">${Number(p.price).toLocaleString()} so'm</div>
                             <button onclick="addToCart(${p.id})" class="w-full bg-purple-50 uzum-purple-text hover:bg-[#7000FF] hover:text-white py-2 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-sm">
                                 <i class="fa-solid fa-cart-plus"></i>
                                 <span>Savatga</span>
@@ -245,9 +200,7 @@
             renderProducts('all', e.target.value);
         });
 
-        function filterCategory(cat) {
-            renderProducts(cat, document.getElementById('searchInput').value);
-        }
+        function filterCategory(cat) { renderProducts(cat, document.getElementById('searchInput').value); }
 
         function toggleCart() {
             const drawer = document.getElementById('cartDrawer');
@@ -264,11 +217,7 @@
         function addToCart(id) {
             const prod = products.find(p => p.id === id);
             const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty++;
-            } else {
-                cart.push({ ...prod, qty: 1 });
-            }
+            if (item) { item.qty++; } else { cart.push({ ...prod, qty: 1 }); }
             renderCart();
             toggleCart();
         }
@@ -277,14 +226,12 @@
             const container = document.getElementById('cartItems');
             container.innerHTML = '';
             let total = 0;
-
             if (cart.length === 0) {
                 container.innerHTML = `<p class="text-center text-gray-400 py-16 text-sm">Savatchangiz bo'sh</p>`;
                 document.getElementById('cartTotal').innerText = `0 so'm`;
                 document.getElementById('cartBadge').innerText = 0;
                 return;
             }
-
             let badgeCount = 0;
             cart.forEach(item => {
                 total += item.price * item.qty;
@@ -295,7 +242,7 @@
                             <img src="${item.image}" class="w-12 h-12 object-cover rounded-xl bg-gray-50">
                             <div>
                                 <h4 class="text-xs font-bold text-gray-800">${item.name}</h4>
-                                <div class="text-xs uzum-purple-text font-extrabold mt-0.5">${item.price.toLocaleString()} so'm</div>
+                                <div class="text-xs uzum-purple-text font-extrabold mt-0.5">${Number(item.price).toLocaleString()} so'm</div>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2 bg-gray-100 rounded-xl p-1">
@@ -306,7 +253,6 @@
                     </div>
                 `;
             });
-
             document.getElementById('cartTotal').innerText = total.toLocaleString() + " so'm";
             document.getElementById('cartBadge').innerText = badgeCount;
         }
@@ -315,9 +261,7 @@
             const item = cart.find(i => i.id === id);
             if (item) {
                 item.qty += delta;
-                if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
+                if (item.qty <= 0) { cart = cart.filter(i => i.id !== id); }
             }
             renderCart();
         }
@@ -329,16 +273,11 @@
                 alert("Iltimos, telefon raqam va manzilni to'ldiring!");
                 return;
             }
-
             const newOrder = {
-                id: Date.now(),
-                phone,
-                address,
-                items: [...cart],
+                id: Date.now(), phone, address, items: [...cart],
                 total: cart.reduce((sum, i) => sum + (i.price * i.qty), 0),
                 date: new Date().toLocaleString()
             };
-
             orders.push(newOrder);
             localStorage.setItem('zor_orders', JSON.stringify(orders));
             alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
@@ -350,12 +289,11 @@
         function openProductModal(id) {
             const p = products.find(prod => prod.id === id);
             if (!p) return;
-            
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
                 <img src="${p.image}" class="w-full h-48 object-cover rounded-2xl mb-4 bg-gray-50">
                 <h3 class="font-black text-lg text-gray-900 mb-1">${p.name}</h3>
-                <div class="uzum-purple-text font-black text-base mb-3">${p.price.toLocaleString()} so'm / ${p.weight || 'dona'}</div>
+                <div class="uzum-purple-text font-black text-base mb-3">${Number(p.price).toLocaleString()} so'm / ${p.weight || 'dona'}</div>
                 <p class="text-xs text-gray-500 mb-6 leading-relaxed">${p.desc}</p>
                 <button onclick="addToCart(${p.id}); closeProductModal();" class="w-full uzum-purple uzum-purple-hover text-white py-3.5 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-500/20">Savatga qo'shish</button>
             `;
