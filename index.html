@@ -80,7 +80,19 @@
             </button>
         </div>
 
-        <h2 class="text-xl font-black">Mahsulotlar</h2>
+        <!-- Title & Sorting -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+            <h2 class="text-xl font-black">Mahsulotlar</h2>
+            <div class="flex items-center space-x-2">
+                <span class="text-xs text-gray-500 font-medium"><i class="fa-solid fa-arrow-up-wide-short mr-1"></i>Saralash:</span>
+                <select id="sortSelect" onchange="sortProducts()" class="bg-white border rounded-xl text-xs p-2 outline-none font-bold text-gray-700 shadow-sm">
+                    <option value="default">Saralanmagan</option>
+                    <option value="low">Arzondan qimmatga</option>
+                    <option value="high">Qimmatdan arzonga</option>
+                </select>
+            </div>
+        </div>
+
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
@@ -99,6 +111,7 @@
                 </div>
                 <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full border p-3 rounded-xl text-xs">
                 <input type="text" id="orderAddress" placeholder="Yetkazib berish manzili" class="w-full border p-3 rounded-xl text-xs">
+                <textarea id="orderNote" placeholder="Kuryer uchun izoh (ixtiyoriy)..." class="w-full border p-2.5 rounded-xl text-xs h-16 outline-none resize-none"></textarea>
                 <button onclick="checkoutOrder()" class="w-full uzum-purple text-white py-3.5 rounded-xl text-xs font-bold">Buyurtmani rasmiylashtirish</button>
             </div>
         </div>
@@ -114,25 +127,32 @@
 
     <script>
         let initialProducts = [
-            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", hasDiscount: true },
-            { id: 2, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", hasDiscount: false },
-            { id: 3, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true },
-            { id: 4, name: "Toshkent tandir noni", price: 4500, category: "bakery", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", hasDiscount: false }
+            { id: 1, name: "Banan Ekvador", price: 22000, oldPrice: 28000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", hasDiscount: true },
+            { id: 2, name: "Bodring (Issiqxona)", price: 14000, oldPrice: 0, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", hasDiscount: false },
+            { id: 3, name: "Tabiiy Sut 3.2% 1L", price: 12500, oldPrice: 15000, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true }
         ];
 
         let products = JSON.parse(localStorage.getItem('zor_products')) || initialProducts;
+        let currentFilter = 'all';
         let cart = [];
 
         window.onload = function() { renderProducts(); };
 
-        function renderProducts(filter = 'all', search = '') {
+        function renderProducts(filter = currentFilter, search = '') {
+            currentFilter = filter;
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
+
             let filtered = products.filter(p => {
                 let matchCat = filter === 'all' || p.category === filter;
                 let matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
                 return matchCat && matchSearch;
             });
+
+            // Sorting
+            let sortType = document.getElementById('sortSelect').value;
+            if (sortType === 'low') filtered.sort((a,b) => a.price - b.price);
+            if (sortType === 'high') filtered.sort((a,b) => b.price - a.price);
 
             if (filtered.length === 0) {
                 grid.innerHTML = `<p class="col-span-full text-center text-gray-400 py-12">Mahsulot topilmadi</p>`;
@@ -140,18 +160,30 @@
             }
 
             filtered.forEach(p => {
-                let discountBadge = p.hasDiscount ? `<span class="absolute top-2 left-2 bg-[#7000FF] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Arzon narx</span>` : '';
+                let discountTag = '';
+                let priceHtml = `<div class="font-black text-gray-900 text-sm mb-2">${Number(p.price).toLocaleString()} so'm</div>`;
+                
+                if (p.oldPrice && p.oldPrice > p.price) {
+                    let perc = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+                    discountTag = `<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow">-${perc}% CHEGIRMA</span>`;
+                    priceHtml = `
+                        <div class="flex items-baseline space-x-1.5 mb-2">
+                            <span class="font-black text-red-600 text-sm">${Number(p.price).toLocaleString()} so'm</span>
+                            <span class="text-[10px] text-gray-400 line-through font-medium">${Number(p.oldPrice).toLocaleString()} so'm</span>
+                        </div>`;
+                }
+
                 grid.innerHTML += `
                     <div class="bg-white border rounded-2xl p-3 flex flex-col justify-between shadow-sm hover:shadow-lg transition relative group">
                         <div onclick="openProductModal(${p.id})" class="cursor-pointer">
                             <div class="relative rounded-xl overflow-hidden mb-3 bg-gray-50 h-36">
                                 <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition">
-                                ${discountBadge}
+                                ${discountTag}
                             </div>
                             <h3 class="font-medium text-xs text-gray-800 line-clamp-2 h-8">${p.name}</h3>
                         </div>
                         <div>
-                            <div class="font-black text-gray-900 text-sm mb-2">${Number(p.price).toLocaleString()} so'm</div>
+                            ${priceHtml}
                             <button onclick="addToCart(${p.id})" class="w-full bg-purple-50 uzum-purple-text hover:bg-[#7000FF] hover:text-white py-2 rounded-xl text-xs font-bold transition">Savatga</button>
                         </div>
                     </div>
@@ -159,10 +191,8 @@
             });
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            renderProducts('all', e.target.value);
-        });
-
+        function sortProducts() { renderProducts(); }
+        document.getElementById('searchInput').addEventListener('input', (e) => { renderProducts(currentFilter, e.target.value); });
         function filterCategory(cat) { renderProducts(cat, document.getElementById('searchInput').value); }
 
         function toggleCart() {
@@ -197,10 +227,15 @@
 
         function openProductModal(id) {
             let p = products.find(x => x.id === id);
+            let oldPriceDisplay = p.oldPrice && p.oldPrice > p.price ? `<span class="text-xs text-gray-400 line-through ml-2">${Number(p.oldPrice).toLocaleString()} so'm</span>` : '';
+            
             document.getElementById('modalContent').innerHTML = `
                 <img src="${p.image}" class="w-full h-48 object-cover rounded-2xl mb-4">
                 <h3 class="font-black text-lg mb-1">${p.name}</h3>
-                <div class="uzum-purple-text font-black text-base mb-4">${Number(p.price).toLocaleString()} so'm</div>
+                <div class="uzum-purple-text font-black text-base mb-4 flex items-center">
+                    <span>${Number(p.price).toLocaleString()} so'm</span>
+                    ${oldPriceDisplay}
+                </div>
                 <button onclick="addToCart(${p.id}); closeProductModal();" class="w-full uzum-purple text-white py-3 rounded-xl text-xs font-bold">Savatga qo'shish</button>
             `;
             document.getElementById('productModal').classList.remove('hidden');
@@ -214,18 +249,29 @@
 
         function checkoutOrder() {
             let phone = document.getElementById('orderPhone').value, address = document.getElementById('orderAddress').value;
-            if(!phone || !address || cart.length === 0) return alert("Ma'lumotlarni to'ldiring!");
+            let note = document.getElementById('orderNote').value;
+            if(!phone || !address || cart.length === 0) return alert("Iltimos, telefon va manzilni to'liq kiriting!");
             
-            let newOrder = { phone, address, items: cart, total: cart.reduce((s,i)=>s+i.price*i.qty,0), date: new Date().toLocaleString() };
+            let newOrder = { 
+                id: Date.now(), 
+                phone, 
+                address, 
+                note: note || "Yo'q", 
+                items: cart, 
+                total: cart.reduce((s,i)=>s+i.price*i.qty,0), 
+                status: 'Yangi', 
+                date: new Date().toLocaleString() 
+            };
+            
             let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
             orders.push(newOrder);
             localStorage.setItem('zor_orders', JSON.stringify(orders));
 
-            // Telegramga yuborish
+            // Telegram Bot Notification
             let token = "8760617631:AAEEvZqzpHwpFtgBLLsVPNYEgns_wzJu5k";
             let chatId = "8632244174";
             let itemsStr = cart.map(i => `• ${i.name} (${i.qty}ta)`).join('\n');
-            let text = `🛒 *Yangi buyurtma!*\n\n📞 Tel: ${phone}\n📍 Manzil: ${address}\n\n📦 Mahsulotlar:\n${itemsStr}\n\n💰 Jami: ${newOrder.total.toLocaleString()} so'm`;
+            let text = `🛒 *Yangi buyurtma keldi!*\n\n📞 *Tel:* ${phone}\n📍 *Manzil:* ${address}\n📝 *Izoh:* ${newOrder.note}\n\n📦 *Mahsulotlar:*\n${itemsStr}\n\n💰 *Jami summa:* ${newOrder.total.toLocaleString()} so'm`;
             
             fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: 'POST',
@@ -235,6 +281,7 @@
 
             alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
             cart = []; renderCart(); toggleCart();
+            document.getElementById('orderNote').value = '';
         }
     </script>
 </body>
