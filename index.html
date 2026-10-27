@@ -10,12 +10,18 @@
         .app-green { background-color: #10B981; }
         .app-green-text { color: #10B981; }
         .app-green-hover:hover { background-color: #059669; }
+        /* Orqa fonni yanada chiroyli va jonli qilish uchun */
+        body {
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#10B981 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans pb-24">
+<body class="text-gray-900 font-sans pb-24">
 
     <!-- Yuqori qism (Header) -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <header class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <a href="./index.html" class="text-2xl font-black app-green-text tracking-tighter flex items-center">
                 <span class="bg-[#10B981] text-white p-2 rounded-2xl mr-2 text-base"><i class="fa-solid fa-bag-shopping"></i></span> ZO'R market
@@ -37,68 +43,69 @@
 
     <!-- Asosiy qism -->
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
-        <!-- Banner -->
-        <div class="rounded-3xl overflow-hidden bg-gradient-to-r from-emerald-500 to-green-600 text-white p-6 md:p-8 flex items-center justify-between shadow-lg">
-            <div class="space-y-2">
-                <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase">30% Chegirma</span>
-                <h1 class="text-2xl md:text-3xl font-black">ZO'R marketdan buyurtma bering va chegirmaga ega bo'ling!</h1>
+        <!-- Banner (Orqasiga chiroyli rasm va qoraytirilgan fon qo'shildi) -->
+        <div class="rounded-3xl overflow-hidden relative text-white p-6 md:p-10 flex items-center justify-between shadow-xl bg-cover bg-center" style="background-image: linear-gradient(rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.95)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000');">
+            <div class="space-y-3 relative z-10 max-w-xl">
+                <span class="bg-white/20 backdrop-blur-md text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">⚡ 30% Chegirma</span>
+                <h1 class="text-2xl md:text-4xl font-black leading-tight">ZO'R marketdan buyurtma bering va chegirmaga ega bo'ling!</h1>
+                <p class="text-xs md:text-sm text-emerald-100 font-medium">Eng sara mahsulotlar uyingizgacha tezkor yetkazib beriladi.</p>
             </div>
-            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400" class="w-40 rounded-2xl hidden md:block shadow-md h-24 object-cover">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400" class="w-48 rounded-2xl hidden md:block shadow-2xl h-32 object-cover border-4 border-white/20 relative z-10">
         </div>
 
         <!-- Kategoriyalar -->
-        <div>
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-lg font-black">Kategoriyalar</h2>
+        <div class="bg-white/80 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-black text-gray-800">Kategoriyalar</h2>
             </div>
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
-                <button onclick="filterCategory('all')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-emerald-50 app-green-text rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-border-all"></i></div>
+                <button onclick="filterCategory('all')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-emerald-50 hover:border-[#10B981] transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-emerald-100 app-green-text rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-border-all"></i></div>
                     <span class="text-xs font-bold text-gray-700">Barchasi</span>
                 </button>
-                <button onclick="filterCategory('vegetables')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-carrot"></i></div>
+                <button onclick="filterCategory('vegetables')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-orange-50 hover:border-orange-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-carrot"></i></div>
                     <span class="text-xs font-bold text-gray-700">Sabzavotlar</span>
                 </button>
-                <button onclick="filterCategory('fruits')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-apple-whole"></i></div>
+                <button onclick="filterCategory('fruits')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-red-50 hover:border-red-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-apple-whole"></i></div>
                     <span class="text-xs font-bold text-gray-700">Mevalar</span>
                 </button>
-                <button onclick="filterCategory('meat')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-drumstick-bite"></i></div>
+                <button onclick="filterCategory('meat')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-rose-50 hover:border-rose-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-drumstick-bite"></i></div>
                     <span class="text-xs font-bold text-gray-700">Go'sht</span>
                 </button>
-                <button onclick="filterCategory('dairy')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-cow"></i></div>
+                <button onclick="filterCategory('dairy')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-blue-50 hover:border-blue-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-cow"></i></div>
                     <span class="text-xs font-bold text-gray-700">Sut va tuxum</span>
                 </button>
-                <button onclick="filterCategory('bakery')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-bread-slice"></i></div>
+                <button onclick="filterCategory('bakery')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-amber-50 hover:border-amber-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-bread-slice"></i></div>
                     <span class="text-xs font-bold text-gray-700">Non mahsulotlari</span>
                 </button>
-                <button onclick="filterCategory('beverages')" class="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 text-center hover:shadow-md transition flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-bottle-droplet"></i></div>
+                <button onclick="filterCategory('beverages')" class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center hover:bg-emerald-50 hover:border-emerald-400 transition flex flex-col items-center group">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-500 rounded-2xl flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-bottle-droplet"></i></div>
                     <span class="text-xs font-bold text-gray-700">Ichimliklar</span>
                 </button>
             </div>
         </div>
 
         <div class="flex justify-between items-center pt-2">
-            <h2 class="text-lg font-black">Ommabop mahsulotlar</h2>
+            <h2 class="text-lg font-black text-gray-800">Ommabop mahsulotlar</h2>
         </div>
 
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
     <!-- Pastki menyu paneli -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 py-3 px-6 flex justify-around items-center z-40 shadow-lg">
+    <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-100 py-3 px-6 flex justify-around items-center z-40 shadow-lg">
         <a href="./index.html" class="flex flex-col items-center app-green-text text-xs font-bold">
             <i class="fa-solid fa-house text-lg mb-0.5"></i> Asosiy
         </a>
         <button onclick="toggleCart()" class="flex flex-col items-center text-gray-400 hover:text-gray-700 text-xs font-medium">
             <i class="fa-solid fa-bag-shopping text-lg mb-0.5"></i> Buyurtmalar
         </button>
-        <button onclick="toggleCart()" class="w-12 h-12 app-green text-white rounded-full flex items-center justify-center shadow-lg -mt-6">
+        <button onclick="toggleCart()" class="w-12 h-12 app-green text-white rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30 -mt-6 hover:scale-105 transition">
             <i class="fa-solid fa-cart-shopping text-base"></i>
         </button>
         <a href="#" class="flex flex-col items-center text-gray-400 hover:text-gray-700 text-xs font-medium">
@@ -127,7 +134,7 @@
                 <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full border p-3 rounded-2xl text-xs outline-none focus:border-[#10B981]">
                 <input type="text" id="orderAddress" placeholder="Yetkazib berish manzili" class="w-full border p-3 rounded-2xl text-xs outline-none focus:border-[#10B981]">
                 <textarea id="orderNote" placeholder="Kuryer uchun izoh (ixtiyoriy)..." class="w-full border p-2.5 rounded-2xl text-xs h-14 outline-none resize-none focus:border-[#10B981]"></textarea>
-                <button onclick="checkoutOrder()" class="w-full app-green text-white py-3.5 rounded-2xl text-xs font-bold shadow-lg shadow-emerald-500/20">Buyurtmani tasdiqlash</button>
+                <button onclick="checkoutOrder()" class="w-full app-green text-white py-3.5 rounded-2xl text-xs font-bold shadow-lg shadow-emerald-500/25">Buyurtmani tasdiqlash</button>
             </div>
         </div>
     </div>
@@ -162,7 +169,7 @@
             }
 
             filtered.forEach(p => {
-                let discountTag = p.hasDiscount ? `<span class="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Chegirma</span>` : '';
+                let discountTag = p.hasDiscount ? `<span class="absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow">Chegirma</span>` : '';
                 grid.innerHTML += `
                     <div class="bg-white border border-gray-100 rounded-3xl p-3 flex flex-col justify-between shadow-sm hover:shadow-xl transition relative group">
                         <div>
