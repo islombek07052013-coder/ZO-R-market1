@@ -13,14 +13,21 @@
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
+
+    <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <a href="#" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center">
+            <a href="./index.html" class="text-2xl font-black uzum-purple-text tracking-tighter flex items-center">
                 <span class="bg-[#7000FF] text-white p-1.5 rounded-xl mr-1.5 text-lg"><i class="fa-solid fa-bag-shopping"></i></span> ZO'R market
             </a>
+
             <div class="flex-1 max-w-2xl relative">
-                <input type="text" id="searchInput" placeholder="Mahsulotlar izlash..." class="w-full bg-gray-100 border-2 border-transparent focus:border-[#7000FF] focus:bg-white rounded-xl py-2.5 px-4 text-sm outline-none transition">
+                <div class="flex">
+                    <input type="text" id="searchInput" placeholder="Mahsulotlarni izlash..." class="w-full bg-gray-100 border-2 border-transparent focus:border-[#7000FF] focus:bg-white rounded-l-xl py-2.5 px-4 text-sm outline-none transition">
+                    <button class="uzum-purple text-white px-6 rounded-r-xl text-sm font-medium"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
             </div>
+
             <button onclick="toggleCart()" class="flex flex-col items-center text-gray-600 hover:text-[#7000FF] text-xs font-medium relative">
                 <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
                 <span>Savat</span>
@@ -29,7 +36,51 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+        <!-- Banner -->
+        <div class="rounded-3xl overflow-hidden bg-gradient-to-r from-purple-700 via-[#7000FF] to-indigo-800 text-white p-6 md:p-8 flex items-center justify-between shadow-md">
+            <div class="space-y-2">
+                <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase">⚡ Tezkor Yetkazish</span>
+                <h1 class="text-2xl md:text-3xl font-black">Eng sara va sifatli mahsulotlar!</h1>
+                <p class="text-xs text-purple-200">Uyingizgacha 30 daqiqada yetkazib beramiz.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400" class="w-48 rounded-2xl hidden md:block shadow-lg h-28 object-cover">
+        </div>
+
+        <!-- Categories -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+            <button onclick="filterCategory('all')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-purple-50 uzum-purple-text rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-border-all"></i></div>
+                <span class="text-xs font-bold">Barchasi</span>
+            </button>
+            <button onclick="filterCategory('fruits')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-apple-whole"></i></div>
+                <span class="text-xs font-bold">Meva va sabzavot</span>
+            </button>
+            <button onclick="filterCategory('dairy')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-cow"></i></div>
+                <span class="text-xs font-bold">Sut va tuxum</span>
+            </button>
+            <button onclick="filterCategory('bakery')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-bread-slice"></i></div>
+                <span class="text-xs font-bold">Non va pishiriq</span>
+            </button>
+            <button onclick="filterCategory('sweets')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-pink-50 text-pink-500 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-cookie-bite"></i></div>
+                <span class="text-xs font-bold">Shirinliklar</span>
+            </button>
+            <button onclick="filterCategory('meat')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-drumstick-bite"></i></div>
+                <span class="text-xs font-bold">Go'sht va baliq</span>
+            </button>
+            <button onclick="filterCategory('beverages')" class="bg-white p-3 rounded-2xl shadow-sm border text-center hover:shadow transition flex flex-col items-center">
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-1"><i class="fa-solid fa-bottle-droplet"></i></div>
+                <span class="text-xs font-bold">Ichimliklar</span>
+            </button>
+        </div>
+
+        <h2 class="text-xl font-black">Mahsulotlar</h2>
         <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </main>
 
@@ -42,40 +93,77 @@
             </div>
             <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
             <div class="p-4 border-t bg-gray-50 space-y-3">
-                <div class="flex justify-between font-bold">
+                <div class="flex justify-between font-bold text-base">
                     <span>Jami:</span>
                     <span id="cartTotal" class="uzum-purple-text">0 so'm</span>
                 </div>
-                <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full border rounded-xl p-3 text-xs">
-                <input type="text" id="orderAddress" placeholder="Manzilingiz" class="w-full border rounded-xl p-3 text-xs">
-                <button onclick="checkoutOrder()" class="w-full uzum-purple text-white py-3 rounded-xl text-xs font-bold">Buyurtma berish</button>
+                <input type="text" id="orderPhone" placeholder="Telefon raqamingiz (+998...)" class="w-full border p-3 rounded-xl text-xs">
+                <input type="text" id="orderAddress" placeholder="Yetkazib berish manzili" class="w-full border p-3 rounded-xl text-xs">
+                <button onclick="checkoutOrder()" class="w-full uzum-purple text-white py-3.5 rounded-xl text-xs font-bold">Buyurtmani rasmiylashtirish</button>
             </div>
         </div>
     </div>
 
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
+            <button onclick="closeProductModal()" class="absolute right-4 top-4 bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center text-gray-500"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
     <script>
-        let products = JSON.parse(localStorage.getItem('zor_products')) || [
-            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400" },
-            { id: 2, name: "Qizil olma Fuji", price: 16000, category: "fruits", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400" }
+        let initialProducts = [
+            { id: 1, name: "Banan Ekvador", price: 22000, category: "fruits", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", hasDiscount: true },
+            { id: 2, name: "Bodring (Issiqxona)", price: 14000, category: "fruits", image: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400", hasDiscount: false },
+            { id: 3, name: "Tabiiy Sut 3.2% 1L", price: 12500, category: "dairy", image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400", hasDiscount: true },
+            { id: 4, name: "Toshkent tandir noni", price: 4500, category: "bakery", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", hasDiscount: false }
         ];
+
+        let products = JSON.parse(localStorage.getItem('zor_products')) || initialProducts;
         let cart = [];
 
         window.onload = function() { renderProducts(); };
 
-        function renderProducts() {
+        function renderProducts(filter = 'all', search = '') {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
-            products.forEach(p => {
+            let filtered = products.filter(p => {
+                let matchCat = filter === 'all' || p.category === filter;
+                let matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-gray-400 py-12">Mahsulot topilmadi</p>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                let discountBadge = p.hasDiscount ? `<span class="absolute top-2 left-2 bg-[#7000FF] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Arzon narx</span>` : '';
                 grid.innerHTML += `
-                    <div class="bg-white border rounded-2xl p-3 flex flex-col justify-between shadow-sm">
-                        <img src="${p.image}" class="w-full h-36 object-cover rounded-xl mb-2">
-                        <h3 class="font-medium text-xs mb-1">${p.name}</h3>
-                        <div class="font-black text-sm mb-2">${Number(p.price).toLocaleString()} so'm</div>
-                        <button onclick="addToCart(${p.id})" class="w-full bg-purple-50 uzum-purple-text hover:bg-[#7000FF] hover:text-white py-2 rounded-xl text-xs font-bold transition">Savatga</button>
+                    <div class="bg-white border rounded-2xl p-3 flex flex-col justify-between shadow-sm hover:shadow-lg transition relative group">
+                        <div onclick="openProductModal(${p.id})" class="cursor-pointer">
+                            <div class="relative rounded-xl overflow-hidden mb-3 bg-gray-50 h-36">
+                                <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-105 transition">
+                                ${discountBadge}
+                            </div>
+                            <h3 class="font-medium text-xs text-gray-800 line-clamp-2 h-8">${p.name}</h3>
+                        </div>
+                        <div>
+                            <div class="font-black text-gray-900 text-sm mb-2">${Number(p.price).toLocaleString()} so'm</div>
+                            <button onclick="addToCart(${p.id})" class="w-full bg-purple-50 uzum-purple-text hover:bg-[#7000FF] hover:text-white py-2 rounded-xl text-xs font-bold transition">Savatga</button>
+                        </div>
                     </div>
                 `;
             });
         }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderProducts('all', e.target.value);
+        });
+
+        function filterCategory(cat) { renderProducts(cat, document.getElementById('searchInput').value); }
 
         function toggleCart() {
             const d = document.getElementById('cartDrawer'), p = document.getElementById('cartPanel');
@@ -93,21 +181,60 @@
         function renderCart() {
             let container = document.getElementById('cartItems'), total = 0, count = 0;
             container.innerHTML = '';
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-12">Savat bo'sh</p>`;
+                document.getElementById('cartTotal').innerText = `0 so'm`;
+                document.getElementById('cartBadge').innerText = 0;
+                return;
+            }
             cart.forEach(i => {
                 total += i.price * i.qty; count += i.qty;
-                container.innerHTML += `<div class="flex justify-between text-xs border-b pb-2"><span>${i.name} (${i.qty}ta)</span> <b>${(i.price*i.qty).toLocaleString()} so'm</b></div>`;
+                container.innerHTML += `<div class="flex justify-between items-center text-xs border-b pb-2"><span><b>${i.name}</b> (${i.qty}ta)</span> <span class="uzum-purple-text font-bold">${(i.price*i.qty).toLocaleString()} so'm</span></div>`;
             });
             document.getElementById('cartTotal').innerText = total.toLocaleString() + " so'm";
             document.getElementById('cartBadge').innerText = count;
         }
 
+        function openProductModal(id) {
+            let p = products.find(x => x.id === id);
+            document.getElementById('modalContent').innerHTML = `
+                <img src="${p.image}" class="w-full h-48 object-cover rounded-2xl mb-4">
+                <h3 class="font-black text-lg mb-1">${p.name}</h3>
+                <div class="uzum-purple-text font-black text-base mb-4">${Number(p.price).toLocaleString()} so'm</div>
+                <button onclick="addToCart(${p.id}); closeProductModal();" class="w-full uzum-purple text-white py-3 rounded-xl text-xs font-bold">Savatga qo'shish</button>
+            `;
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productModal').classList.add('flex');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            document.getElementById('productModal').classList.remove('flex');
+        }
+
         function checkoutOrder() {
             let phone = document.getElementById('orderPhone').value, address = document.getElementById('orderAddress').value;
             if(!phone || !address || cart.length === 0) return alert("Ma'lumotlarni to'ldiring!");
+            
+            let newOrder = { phone, address, items: cart, total: cart.reduce((s,i)=>s+i.price*i.qty,0), date: new Date().toLocaleString() };
             let orders = JSON.parse(localStorage.getItem('zor_orders')) || [];
-            orders.push({ phone, address, items: cart, total: cart.reduce((s,i)=>s+i.price*i.qty,0), date: new Date().toLocaleString() });
+            orders.push(newOrder);
             localStorage.setItem('zor_orders', JSON.stringify(orders));
-            alert("Buyurtma qabul qilindi!"); cart = []; renderCart(); toggleCart();
+
+            // Telegramga yuborish
+            let token = "8760617631:AAEEvZqzpHwpFtgBLLsVPNYEgns_wzJu5k";
+            let chatId = "8632244174";
+            let itemsStr = cart.map(i => `• ${i.name} (${i.qty}ta)`).join('\n');
+            let text = `🛒 *Yangi buyurtma!*\n\n📞 Tel: ${phone}\n📍 Manzil: ${address}\n\n📦 Mahsulotlar:\n${itemsStr}\n\n💰 Jami: ${newOrder.total.toLocaleString()} so'm`;
+            
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({chat_id: chatId, text, parse_mode: 'Markdown'})
+            }).catch(e => console.log(e));
+
+            alert("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
+            cart = []; renderCart(); toggleCart();
         }
     </script>
 </body>
